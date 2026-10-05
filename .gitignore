@@ -1,0 +1,8 @@
+# Copia de seguridad del borrador anterior (solo local)
+_borrador-anterior/
+# Copia antigua de imágenes del borrador (ya están en _borrador-anterior/images y assets/img/aquiestamos)
+/images/
+
+.DS_Store
+Thumbs.db
+node_modules/

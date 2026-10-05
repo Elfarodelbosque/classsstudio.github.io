@@ -1,0 +1,156 @@
+/* =========================================================
+   Labbb — escritorio interactivo
+   ========================================================= */
+.labbb-page { height: 100vh; height: 100dvh; overflow: hidden; background: #3a7bd5; }
+.desktop { position: fixed; inset: 0; overflow: hidden; user-select: none; -webkit-user-select: none; }
+.wallpaper { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+.back-btn {
+  position: absolute; left: 29px; top: 29px; z-index: 50;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .9); color: #000;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+  transition: transform .3s var(--ease);
+}
+.back-btn:hover { transform: scale(1.08); }
+.back-btn svg { width: 16px; height: 16px; }
+
+/* ---------- Iconos del escritorio ---------- */
+.d-icon {
+  position: absolute; z-index: 5; width: 160px; margin-left: -40px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  touch-action: none;
+}
+.d-icon .thumb {
+  width: 80px; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .22);
+  transition: transform .3s var(--ease), box-shadow .3s;
+}
+.d-icon .thumb img, .d-icon .thumb video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.d-icon span {
+  font-size: 14px; font-weight: 600; line-height: 17px; color: #c7c7cc;
+  text-shadow: rgba(0, 0, 0, .35) 0 1px 2px; text-align: center; padding: 1px 6px; border-radius: 4px;
+}
+.d-icon:hover .thumb { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 0, 0, .28); }
+.d-icon.is-selected span { background: #2f6fde; color: #fff; text-shadow: none; }
+.d-icon.is-dragging { z-index: 40; }
+.d-icon.is-dragging .thumb { transform: scale(1.06); }
+
+/* ---------- Dock ---------- */
+.dock {
+  position: absolute; left: 50%; bottom: 76px; transform: translateX(-50%); z-index: 60;
+  display: flex; gap: 16px; padding: 10px 12px;
+  background: rgba(255, 255, 255, .28); border: 1px solid rgba(255, 255, 255, .35);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-radius: 22px;
+}
+.dock-item { position: relative; display: block; width: 48px; height: 48px; padding: 0; border: 0; background: none; }
+.dock-item img { width: 48px; height: 48px; border-radius: 16px; object-fit: cover; transition: transform .25s var(--ease); transform-origin: 50% 100%; }
+.dock-item:hover img { transform: scale(1.25) translateY(-4px); }
+.dock-item .tip {
+  position: absolute; left: 50%; bottom: calc(100% + 14px); transform: translateX(-50%);
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500; line-height: 16px; color: #000;
+  background: rgba(255, 255, 255, .85); padding: 3px 8px; border-radius: 6px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.dock-item:hover .tip { opacity: 1; }
+.dock-item.is-open::after {
+  content: ""; position: absolute; left: 50%; bottom: -7px; width: 4px; height: 4px; margin-left: -2px;
+  border-radius: 50%; background: rgba(0, 0, 0, .55);
+}
+
+/* ---------- Ventanas tipo macOS ---------- */
+.win {
+  position: absolute; z-index: 100; display: flex; flex-direction: column;
+  max-width: calc(100vw - 24px); max-height: calc(100dvh - 140px);
+  background: #fff; color: #000; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .35), 0 0 0 1px rgba(0, 0, 0, .08);
+  font-family: var(--font-ui);
+  animation: winIn .35s var(--ease);
+  user-select: text; -webkit-user-select: text;
+}
+@keyframes winIn { from { opacity: 0; transform: scale(.92) translateY(14px); } }
+.win.is-closing { animation: winOut .22s ease forwards; }
+@keyframes winOut { to { opacity: 0; transform: scale(.94); } }
+.win-bar {
+  flex: none; position: relative; height: 42px; display: flex; align-items: center; gap: 8px;
+  padding: 0 10px; background: #fff; border-bottom: 1px solid #ececec; cursor: grab; touch-action: none;
+  user-select: none; -webkit-user-select: none;
+}
+.win-bar .dot { width: 12px; height: 12px; border-radius: 50%; border: 0; padding: 0; flex: none; }
+.win-bar .dot.r { background: #fd5d5c; }
+.win-bar .dot.y { background: #fac900; }
+.win-bar .dot.g { background: #34c75a; }
+.win-bar .title { margin-left: 12px; font-size: 16px; color: #86868b; }
+.win-body { overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* About me */
+.win-about { width: 465px; height: 640px; }
+.win-about .win-body { padding: 16px; }
+.win-about h2 { font-family: var(--font-ui); font-size: 24px; font-weight: 600; line-height: 30px; margin: 4px 0 18px; }
+.win-about .photo { border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+.win-about .photo img { width: 100%; height: 340px; object-fit: cover; }
+.win-about .row { display: flex; gap: 10px; font-size: 16px; line-height: 22.4px; margin-bottom: 16px; }
+.win-about .row b { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 400; width: 36px; }
+.win-about .row span, .win-about .row a { color: #86868b; }
+.win-about .bio { background: #eaeaea; border-radius: 8px; padding: 16px; font-size: 16px; line-height: 22.4px; }
+.win-about .bio p + p { margin-top: 22px; }
+.win-about .cta { display: flex; justify-content: flex-end; margin: 24px 0 8px; }
+.win-about .cta a { padding: 8px 12px; border-radius: 8px; background: #f2f2f2; font-size: 16px; transition: background .2s; }
+.win-about .cta a:hover { background: #e2e2e2; }
+
+/* Notes */
+.win-notes { width: 720px; height: 560px; }
+.win-notes .win-body { display: grid; grid-template-columns: 240px 1fr; overflow: hidden; flex: 1; min-height: 0; }
+.notes-list { padding: 16px; border-right: 1px solid #ececec; overflow: auto; }
+.note-btn {
+  display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 16px; border-radius: 16px;
+  font-size: 16px; line-height: 22px; margin-bottom: 8px; transition: background .2s;
+}
+.note-btn b { display: block; font-weight: 600; margin-bottom: 5px; }
+.note-btn small { font-size: 16px; display: flex; gap: 10px; white-space: nowrap; overflow: hidden; }
+.note-btn small i { font-style: normal; color: #86868b; overflow: hidden; text-overflow: ellipsis; }
+.note-btn.is-active { background: #ffe390; }
+.note-view { padding: 16px 32px 32px; overflow: auto; font-size: 16px; line-height: 22.4px; }
+.note-view .date { color: #86868b; text-align: center; margin-bottom: 18px; }
+.note-view h3 { font-size: 24px; font-weight: 600; line-height: 30px; margin-bottom: 18px; }
+.note-view p { margin-bottom: 22px; }
+.note-view p strong { display: block; font-weight: 600; }
+.note-panel[hidden] { display: none; }
+
+/* Proyecto (carpeta) */
+.win-project { width: 1008px; height: 590px; }
+.win-project .win-body { padding: 16px; }
+.win-project h2 { font-family: var(--font-ui); font-size: 48px; font-weight: 500; line-height: 56px; letter-spacing: -1px; margin-bottom: 12px; }
+.win-project .desc { font-size: 16px; line-height: 22px; color: #86868b; margin-bottom: 16px; }
+.win-project .facts { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 40px; font-size: 16px; line-height: 26px; }
+.win-project .facts b { display: block; font-weight: 600; }
+.win-project .facts span { color: #86868b; }
+.win-project .media { display: grid; gap: 10px; }
+.win-project .media.grid-2 { grid-template-columns: 1fr 1fr; }
+.win-project .media img, .win-project .media video { width: 100%; height: auto; border-radius: 12px; }
+.win-project .next { margin-top: 16px; padding-top: 16px; }
+.win-project .next h4 { font-size: 28px; font-weight: 600; line-height: 34px; margin-bottom: 16px; }
+.win-project .next button { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; }
+.win-project .next .cover { height: 320px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
+.win-project .next .cover img, .win-project .next .cover video { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.win-project .next button:hover .cover img, .win-project .next button:hover .cover video { transform: scale(1.04); }
+.win-project .next span { font-size: 16px; font-weight: 600; }
+
+@media (max-width: 809px) {
+  .back-btn { left: 16px; top: 16px; }
+  .d-icon { width: 110px; margin-left: -27px; gap: 8px; }
+  .d-icon .thumb { width: 56px; }
+  .d-icon span { font-size: 12px; line-height: 14px; }
+  .dock { bottom: 28px; gap: 10px; padding: 8px 10px; }
+  .dock-item, .dock-item img { width: 42px; height: 42px; border-radius: 13px; }
+  .win { left: 12px !important; top: 72px !important; width: calc(100vw - 24px) !important; height: calc(100dvh - 180px) !important; }
+  .win-notes .win-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .notes-list { display: flex; gap: 8px; border-right: 0; border-bottom: 1px solid #ececec; padding: 10px; }
+  .note-btn { margin: 0; padding: 10px 12px; }
+  .note-btn small { display: none; }
+  .note-view { padding: 16px; }
+  .win-project h2 { font-size: 32px; line-height: 38px; }
+  .win-project .next .cover { height: 180px; }
+}
