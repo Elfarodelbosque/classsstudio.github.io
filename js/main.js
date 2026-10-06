@@ -186,10 +186,12 @@
     const n = cards.length;
     let W = 0, H = 0, mobile = false;
     // el tamaño solo cambia al redimensionar (cambiar width/height en cada scroll obliga a recolocar la página)
+    // tamaño real del póster (data-ratio = ancho/alto, 0,75 en los 3:4), alto limitado por la pantalla
+    const ratio = parseFloat(cards[0] && cards[0].dataset.ratio) || 0.75;
     const size = () => {
       mobile = innerWidth < 810;
-      W = Math.min(mobile ? innerWidth * 0.7 : Math.min(560, innerWidth * 0.39), innerHeight * 0.42 * 1.42);
-      H = W / 1.42;
+      H = Math.min(innerHeight * (mobile ? 0.52 : 0.62), (mobile ? innerWidth * 0.66 : 620) / ratio, 640);
+      W = H * ratio;
       cards.forEach((c) => { c.style.width = W + 'px'; c.style.height = H + 'px'; });
     };
     const render = () => {
@@ -200,8 +202,8 @@
       cards.forEach((c, i) => {
         const d = i - active;            // distancia a la tarjeta activa
         const ad = Math.abs(d);
-        const x = d * W * (mobile ? 0.5 : 0.8);
-        const y = d * H * 1.05;
+        const x = d * W * (mobile ? 0.55 : 1.05);
+        const y = d * H * 0.55;
         const z = -ad * 320;
         c.style.transform = `translate3d(${x - W / 2}px, ${y - H / 2}px, ${z}px) rotateY(${-d * 34}deg)`;
         c.style.opacity = ad > 2.4 ? 0 : ad > 1.6 ? (2.4 - ad) / 0.8 : 1;

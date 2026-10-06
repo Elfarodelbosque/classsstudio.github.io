@@ -350,7 +350,7 @@ Todo comparte la misma gramática visual: madera, alfombra de color y el sello t
 };
 
 /* Orden de aparición (el mismo en Home y Work) */
-const HOME_ORDER = ['alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein', 'aquiestamos'];
+const HOME_ORDER = ['aquiestamos', 'alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein'];
 const WORK_ORDER = HOME_ORDER;
 /* "More Projects" en cada proyecto: los 2 primeros de esta lista que no sean el actual */
 const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecorarunacrisis'];
@@ -422,6 +422,10 @@ function marqueeBar(items) {
     <div class="skills-bar skills-bar--marquee" aria-hidden="true"><div class="track">${row}${row}</div></div>`;
 }
 
+/* Encargo de cliente o proyecto propio (sale del campo Type de la ficha) */
+const kindOf = (p) => (/client/i.test(p.meta.Type) ? 'Cliente' : 'Proyecto propio');
+const catLabel = (p) => `${p.category} · ${kindOf(p)}`;
+
 function projectRow(P, key, { useWork = false } = {}) {
   const p = PROJECTS[key];
   const [big, small] = useWork ? p.work : p.home;
@@ -432,7 +436,7 @@ function projectRow(P, key, { useWork = false } = {}) {
           <div class="project-thumb">${media(P, small, '')}</div>
           <h3 class="project-title">${esc(p.name)}</h3>
           <div class="project-text">
-            <p class="project-meta"><span class="project-name">${esc(p.name)}</span><span class="project-cat">${esc(p.category)}</span></p>
+            <p class="project-meta"><span class="project-name">${esc(p.name)}</span><span class="project-cat">${esc(catLabel(p))}</span></p>
             <p class="t-p">${esc(p.homeSub)}</p>
             <p class="t-body">${esc(p.desc)}</p>
           </div>
@@ -468,8 +472,7 @@ function infoSection(P, { back = { label: '[ BACK TO TOP ]', href: '#top', top: 
         <button type="submit">Abrir mi correo para enviarlo</button>
         <p class="note" aria-live="polite"></p>
       </form>
-    </details>${staticBar()}
-    <p class="footer-text t-body reveal">${esc(SITE.bio)}</p>
+    </details>
     <div class="center"><a class="pill" href="${back.href}"${back.top ? ' data-top' : ''} aria-label="${esc(back.label.replace(/[\[\]]/g, '').trim())}">${chars(back.label)}</a></div>
   </section>
   <footer class="site-footer">
@@ -495,10 +498,11 @@ function write(rel, html) {
    --------------------------------------------------------- */
 function buildHome() {
   const P = '';
+  // [vídeo, proporción ancho/alto real]: los cinco pósters son 800×1066 (3:4)
   const gallery = [
-    ['RYhKZ53RgX0r12BAuO7CjD9olWc.mp4', 501 / 337], ['YzVafttpBMhtf8hM07vBiJtsg4.mp4', 203 / 331],
-    ['vZOli9AdjrBid9PKHCo7owklg8.mp4', 118 / 270], ['YlPEc4VGelljC587vhHzRozjN8k.mp4', 218 / 213],
-    ['iQWiRMygtaSXR8mlo1y7egqQFM.mp4', 235 / 158],
+    ['RYhKZ53RgX0r12BAuO7CjD9olWc.mp4', 800 / 1066], ['YzVafttpBMhtf8hM07vBiJtsg4.mp4', 800 / 1066],
+    ['vZOli9AdjrBid9PKHCo7owklg8.mp4', 800 / 1066], ['YlPEc4VGelljC587vhHzRozjN8k.mp4', 800 / 1066],
+    ['iQWiRMygtaSXR8mlo1y7egqQFM.mp4', 800 / 1066],
   ];
   const quote = 'Prefiero el ruido que rompe el molde a la perfección que nadie recuerda.';
 
@@ -535,16 +539,6 @@ ${gallery.map(([f, r]) => `          <div class="g3d-card" data-ratio="${r.toFix
     </div>
   </section>
 
-  <section class="skills-sec" id="skills" aria-labelledby="skills-title">${bigTitle('Skills', SITE.skills.length, { id: 'skills-title' })}
-    <ul class="skills-list">
-${SITE.skills.map(([t, d, img]) => `      <li class="skill reveal">
-        <h3>${esc(t)}</h3>
-        <p class="t-body">${esc(d)}</p>
-        <div class="skill-img">${media(P, img, '')}</div>
-      </li>`).join('\n')}
-    </ul>
-  </section>
-
   <section class="labbb-sec" id="labbb" aria-labelledby="labbb-title">${bigTitle('Labbb', '<3', { id: 'labbb-title' })}
     <p class="labbb-copy">
       <span class="t-h3 l1 reveal">Descubre mi</span>
@@ -577,7 +571,7 @@ ${WORK_ORDER.map((k) => {
     const p = PROJECTS[k];
     return `    <a class="work-card reveal" href="${P}article/${k}/">
       <div class="media">${media(P, p.work[0], p.alt || p.name)}<div class="thumb">${media(P, p.work[1])}</div></div>
-      <div class="cap">${roll(p.name)}<span>${esc(p.category)}</span></div>
+      <div class="cap">${roll(p.name)}<span>${esc(catLabel(p))}</span></div>
     </a>`;
   }).join('\n')}
   </div>

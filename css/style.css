@@ -128,7 +128,7 @@ a, button, [role="button"] { touch-action: manipulation; }
   .gallery3d { height: auto; padding: 60px var(--pad) 0; }
   .gallery3d-stage { position: static; height: auto; overflow: visible; perspective: none; }
   .gallery3d-world { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
-  .g3d-card { position: relative; width: 260px; height: 183px; }
+  .g3d-card { position: relative; width: 240px; height: 320px; }
 }
 
 /* =========================================================
@@ -258,7 +258,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
    HOME — GALLERY 3D
    ========================================================= */
 .gallery-sec { padding-top: 160px; }
-.gallery3d { position: relative; height: 1400px; }
+.gallery3d { position: relative; height: 2400px; }
 .gallery3d-stage {
   position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
   perspective: 1400px; perspective-origin: 50% 40%;
@@ -512,7 +512,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 
   .projects-sec { padding-top: 96px; }
   .gallery-sec, .skills-sec, .labbb-sec { padding-top: 96px; }
-  .gallery3d { height: 1100px; }
+  .gallery3d { height: 1800px; }
 
   .skills-bar p { font-size: 12px; }
   .skills-bar--static { grid-template-columns: repeat(2, 1fr); padding: 4px 8px; row-gap: 2px; }
