@@ -636,7 +636,9 @@ function buildWork() {
   <div class="work-list">
 ${WORK_ORDER.map((k) => {
     const p = PROJECTS[k];
-    return `    <a class="work-card reveal" href="${P}article/${k}/">
+    // cada tarjeta con la proporción real de su portada (--ar) y de su miniatura (--tr)
+    const [bw, bh] = dims(p.work[0]), [sw, sh] = dims(p.work[1]);
+    return `    <a class="work-card reveal" href="${P}article/${k}/" style="--ar:${(bw / bh).toFixed(4)};--tr:${(sw / sh).toFixed(4)}">
       <div class="media">${media(P, p.work[0], p.alt || p.name)}<div class="thumb">${media(P, p.work[1])}</div></div>
       <div class="cap">${roll(p.name)}<span>${esc(catLabel(p))}</span></div>
     </a>`;

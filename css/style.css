@@ -417,17 +417,21 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .work-title h1 { font-size: 208px; font-weight: 600; line-height: 168px; letter-spacing: -8px; }
 .work-title .count { font-size: 49px; font-weight: 500; line-height: 50.6px; letter-spacing: -0.8px; color: var(--red); margin-left: 20px; }
 .work-list { display: grid; gap: 20px; }
-.work-card { display: block; }
-.work-card .media { position: relative; height: 531px; border-radius: var(--radius); overflow: hidden; }
-.work-card .media > img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+/* Cada tarjeta a la proporción real de su portada (--ar), sin pasar del 80 % del alto de pantalla:
+   las muy verticales se estrechan y se centran en la columna */
+.work-card { display: block; width: min(100%, calc(80vh * var(--ar, 1.25))); margin-inline: auto; }
+.work-card .media { position: relative; aspect-ratio: var(--ar, 1.25); border-radius: var(--radius); overflow: hidden; }
+.work-card .media > img, .work-card .media > video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+/* miniatura entera (--tr), centrada; la mitad del alto de la tarjeta y nunca más ancha que el 70 % */
 .work-card .media .thumb {
-  position: absolute; left: 25.15%; top: 25%; width: 50%; height: 50%;
+  position: absolute; left: 50%; top: 50%; height: 50%; max-width: 70%; aspect-ratio: var(--tr, 1.25);
+  transform: translate(-50%, -50%);
   border-radius: var(--radius); overflow: hidden; transition: transform .8s var(--ease);
 }
-.work-card .media .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.work-card .media .thumb img, .work-card .media .thumb video { width: 100%; height: 100%; object-fit: cover; }
 @media (hover: hover) and (pointer: fine) {
-  .work-card:hover .media > img { transform: scale(1.05); }
-  .work-card:hover .media .thumb { transform: scale(1.06); }
+  .work-card:hover .media > img, .work-card:hover .media > video { transform: scale(1.05); }
+  .work-card:hover .media .thumb { transform: translate(-50%, -50%) scale(1.06); }
 }
 .work-card .cap { display: flex; justify-content: space-between; padding-top: 14px; font-size: 17px; font-weight: 500; --lh: 25.2px; }
 
@@ -597,7 +601,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 
   .work { grid-template-columns: 1fr; padding-top: 110px; }
   .work-title { position: static; height: auto; margin-bottom: 32px; }
-  .work-card .media { height: auto; aspect-ratio: 664 / 531; }
+  .work-card { width: min(100%, calc(80vh * var(--ar, 1.25))); }
   .work-card .cap { font-size: 15px; }
 
   .contact-top { padding-top: 96px; }
