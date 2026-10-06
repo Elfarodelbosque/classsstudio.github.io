@@ -1,7 +1,7 @@
 /* =========================================================
    Generador de páginas — Classs®
    Uso:  node _build/build.js
-   Reescribe index.html, work/, contact/, labbb/ y article/*.
+   Reescribe index.html, work/, about/, labbb/ y article/*.
    Edita los DATOS de abajo (textos, imágenes, orden) y vuelve a ejecutarlo.
    ⚠ Si editas el HTML generado a mano, esos cambios se pierden al regenerar.
    ========================================================= */
@@ -455,7 +455,7 @@ function head({ P, title, description = SITE.description, extraCss = '', intro =
 
 function header(P, current) {
   const home = P || './';
-  const links = [['Home', home, 'home'], ['Work', `${P}work/`, 'work'], ['Labbb', `${P}labbb/`, 'labbb'], ['Contact', `${P}contact/`, 'contact']];
+  const links = [['Home', home, 'home'], ['Work', `${P}work/`, 'work'], ['Labbb', `${P}labbb/`, 'labbb'], ['About', `${P}about/`, 'about']];
   return `
   <header class="site-header">
     <nav class="site-nav" aria-label="Principal">
@@ -651,23 +651,76 @@ ${scripts(P)}`;
 }
 
 /* ---------------------------------------------------------
-   CONTACT
+   ABOUT
+   De momento usa los textos de la ventana "About me" y de las Notas del Labbb.
+   TODO: sustituir por el texto definitivo de Claudia.
    --------------------------------------------------------- */
-function buildContact() {
+const ABOUT = {
+  title: 'Hola, soy Claudia.',
+  lead: 'Empecé estudiando Periodismo porque quería contar historias. Resulta que las mejores se cuentan sin palabras.',
+  story: [
+    'Empecé en Periodismo porque se me daba bien escribir y porque nadie me había dicho que existía otra opción. Tres años después, una clase de maquetación cambió el plan por completo. Descubrí Adobe InDesign, me obsesioné, y ahí se acabó lo de publicar noticias. Lo siento, cuarto poder.',
+    'Lo que vino después fue bastante autodidacta: miles de horas en YouTube, Domestika a horas intempestivas, un ASUS VIVO-BOOK que aguantó más de lo que debería, y la certeza de que esto era lo mío aunque todavía no supiera hacerlo bien del todo.',
+    'He construido desde cero la identidad visual de una marca de moda, diseñado para el departamento de comunicación de una empresa, y hecho webs, carteles y logos para proyectos que merecían verse bien. En paralelo, el Máster en Dirección de Arte en LABASAD — que fue básicamente aprender a justificar con palabras lo que el ojo ya sabía.',
+    'Soy bastante autocrítica, bastante perfeccionista, y convencida de que estoy al 10% de mi potencial. Eso no me asusta. Me parece el mejor sitio desde el que empezar.',
+  ],
+  path: [
+    ['El Faro del Bosque', 'Art Director & Content Creator', 'Construí la identidad visual de esta tienda de moda femenina desde cero. Identidad, tono, contenido, redes. Todo.'],
+    ['qdq', 'Diseñadora Gráfica', 'Creatividades para redes, newsletters, emails, infografías. Dentro del departamento de comunicación de la empresa.'],
+    ['Freelance', '2023 hasta ahora', 'Webs, carteles, logos. Para marcas pequeñas y proyectos con personalidad.'],
+    ['LABASAD', 'Máster en Dirección de Arte en Comunicación, 2026', 'Y antes, Periodismo en la Complutense. Que también cuenta.'],
+  ],
+  tools: 'Trabajo con Photoshop, Illustrator, Blender, Midjourney y todo lo que haga falta. Pero lo que más uso sigue siendo el criterio.',
+};
+
+function buildAbout() {
   const P = '../';
-  const html = `${head({ P, title: 'Contact — Classs®' })}
-<body id="top" class="contact-page">${header(P, 'contact')}
+  const [pw, ph] = dims('mKlZMm6gwNGm1eqPKER45Ocpu4.jpg');
+  const html = `${head({ P, title: 'About — Classs®', description: `${ABOUT.title} ${ABOUT.lead}` })}
+<body id="top" class="about-page">${header(P, 'about')}
 
 <main>
-  <section class="contact-top">
-    <div class="contact-photo">${media(P, 'mKlZMm6gwNGm1eqPKER45Ocpu4.jpg', 'Claudia López-Asiaín', true)}</div>
-    <a class="contact-mail" href="mailto:${SITE.email}">${roll(SITE.email)}${arrowSvg}</a>${staticBar()}
+  <section class="about-hero">
+    <figure class="about-photo" style="aspect-ratio:${pw}/${ph}">${media(P, 'mKlZMm6gwNGm1eqPKER45Ocpu4.jpg', 'Claudia López-Asiaín', true)}</figure>
+    <div class="about-intro">
+      <h1>${esc(ABOUT.title)}</h1>
+      <p class="t-p about-lead">${esc(ABOUT.lead)}</p>
+    </div>
   </section>
-  <h1 class="contact-now"><a href="mailto:${SITE.email}"><span class="fit"><span class="br">[</span> Contact Now <span class="br">]</span></span></a></h1>
+
+  <section class="about-sec" aria-labelledby="story-title">
+    <h2 id="story-title" class="about-label">${br('Mi historia')}</h2>
+    <div class="about-story">
+${ABOUT.story.map((t) => `      <p class="reveal">${esc(t)}</p>`).join('\n')}
+    </div>
+  </section>
+
+  <section class="about-sec" aria-labelledby="path-title">
+    <h2 id="path-title" class="about-label">${br('Recorrido')}</h2>
+    <ol class="about-path">
+${ABOUT.path.map(([where, role, d]) => `      <li class="reveal"><div><h3>${esc(where)}</h3><p class="about-role">${esc(role)}</p></div><p class="t-body">${esc(d)}</p></li>`).join('\n')}
+    </ol>
+  </section>
+
+  <section class="about-sec" aria-labelledby="skills-title">
+    <h2 id="skills-title" class="about-label">${br('Skills')}</h2>
+    <div>
+      <ul class="skills-list">
+${SITE.skills.map(([t, d, img]) => `        <li class="skill reveal">
+          <h3>${esc(t)}</h3>
+          <p class="t-body">${esc(d)}</p>
+          <div class="skill-img">${media(P, img, '')}</div>
+        </li>`).join('\n')}
+      </ul>
+      <p class="t-p about-tools reveal">${esc(ABOUT.tools)}</p>
+    </div>
+  </section>
+
+  <p class="contact-now"><a href="mailto:${SITE.email}" aria-label="Escríbeme: ${SITE.email}"><span class="fit"><span class="br">[</span> Contact Now <span class="br">]</span></span></a></p>
 </main>
-${infoSection(P, { contact: false })}
+${infoSection(P)}
 ${scripts(P)}`;
-  write('contact/index.html', html);
+  write('about/index.html', html);
 }
 
 /* ---------------------------------------------------------
@@ -924,7 +977,7 @@ a:focus-visible{outline:2px solid #ff0000;outline-offset:4px}
 
 buildHome();
 buildWork();
-buildContact();
+buildAbout();
 buildLabbb();
 Object.keys(PROJECTS).forEach(buildArticle);
 build404();

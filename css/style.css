@@ -513,6 +513,36 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .more-marquee p { font-size: 208px; font-weight: 600; line-height: 168px; letter-spacing: -8px; padding-right: 60px; white-space: nowrap; }
 .more-sec .projects { padding-top: 0; margin-top: -24px; }
 
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+.about-hero {
+  display: grid; grid-template-columns: 5fr 7fr; gap: 48px; align-items: end;
+  padding: 140px var(--pad) 0;
+}
+.about-photo { border-radius: var(--radius); overflow: hidden; background: #0b0b0b; max-height: 78vh; }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; }
+.about-intro h1 { font-size: clamp(56px, 8.4vw, 140px); font-weight: 600; line-height: .92; letter-spacing: -0.045em; }
+.about-lead { margin-top: 28px; max-width: 520px; color: var(--grey); }
+
+.about-sec { display: grid; grid-template-columns: 4fr 8fr; gap: 48px; padding: 160px var(--pad) 0; }
+.about-label { position: sticky; top: 110px; align-self: start; font-size: 17px; font-weight: 500; line-height: 25px; display: flex; gap: 4px; }
+.about-label .br { color: var(--red); }
+.about-story p { max-width: 680px; font-size: 22px; font-weight: 500; line-height: 32px; letter-spacing: -0.2px; color: #d6d6d6; }
+.about-story p + p { margin-top: 28px; }
+.about-story p:first-child { color: #fff; }
+
+.about-path { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.about-path li { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.about-path h3 { font-size: 26px; font-weight: 500; line-height: 30px; letter-spacing: -0.3px; }
+.about-path .about-role { margin-top: 6px; font-size: 14px; font-weight: 600; line-height: 19px; color: var(--grey-light); }
+.about-path .t-body { color: var(--grey); max-width: 420px; }
+
+.about-sec .skills-list { margin: 0; }
+.about-tools { margin-top: 40px; max-width: 560px; color: var(--grey); }
+.about-page .contact-now { margin-top: 180px; }
+
 /* =========================================================
    RESPONSIVE
    ========================================================= */
@@ -605,6 +635,12 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .work-card .cap { font-size: 15px; }
 
   .contact-top { padding-top: 96px; }
+  .about-hero { grid-template-columns: 1fr; gap: 28px; padding-top: 104px; }
+  .about-sec { grid-template-columns: 1fr; gap: 24px; padding-top: 96px; }
+  .about-label { position: static; }
+  .about-story p { font-size: 18px; line-height: 27px; }
+  .about-path li { grid-template-columns: 1fr; gap: 10px; }
+  .about-page .contact-now { margin-top: 96px; }
   .contact-photo { width: calc(100% - 2 * var(--pad)); height: auto; aspect-ratio: 490 / 403; }
   .contact-mail { position: static; margin: 24px var(--pad) 0; }
   .contact-top .skills-bar { position: static; margin-top: 24px; }

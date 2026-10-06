@@ -7,7 +7,7 @@ Versión en HTML, CSS y JavaScript (sin frameworks) del portafolio que estaba en
 ```
 index.html                 Home
 work/index.html            All Works
-contact/index.html         Contact
+about/index.html           About (tu historia, recorrido y skills)
 labbb/index.html           Labbb (escritorio interactivo)
 article/<proyecto>/        Una página por proyecto (alhaja, ecoalf, harste…)
 css/style.css              Estilos de toda la web
