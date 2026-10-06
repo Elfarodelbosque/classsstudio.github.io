@@ -1,6 +1,7 @@
 /* =========================================================
    Labbb — escritorio interactivo
    ========================================================= */
+html:has(body.labbb-page), .labbb-page { overscroll-behavior: none; }
 .labbb-page { height: 100vh; height: 100dvh; overflow: hidden; background: #3a7bd5; }
 .desktop { position: fixed; inset: 0; overflow: hidden; user-select: none; -webkit-user-select: none; }
 .wallpaper { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -13,7 +14,10 @@
   box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
   transition: transform .3s var(--ease);
 }
-.back-btn:hover { transform: scale(1.08); }
+@media (hover: hover) and (pointer: fine) {
+  .back-btn:hover { transform: scale(1.08); }
+}
+.back-btn:active { transform: scale(0.95); }
 .back-btn svg { width: 16px; height: 16px; }
 
 /* ---------- Iconos del escritorio ---------- */
@@ -32,29 +36,36 @@
   font-size: 14px; font-weight: 600; line-height: 17px; color: #c7c7cc;
   text-shadow: rgba(0, 0, 0, .35) 0 1px 2px; text-align: center; padding: 1px 6px; border-radius: 4px;
 }
-.d-icon:hover .thumb { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 0, 0, .28); }
+@media (hover: hover) and (pointer: fine) {
+  .d-icon:hover .thumb { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 0, 0, .28); }
+}
 .d-icon.is-selected span { background: #2f6fde; color: #fff; text-shadow: none; }
 .d-icon.is-dragging { z-index: 40; }
 .d-icon.is-dragging .thumb { transform: scale(1.06); }
 
 /* ---------- Dock ---------- */
 .dock {
-  position: absolute; left: 50%; bottom: 76px; transform: translateX(-50%); z-index: 60;
+  position: absolute; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60;
   display: flex; gap: 16px; padding: 10px 12px;
   background: rgba(255, 255, 255, .28); border: 1px solid rgba(255, 255, 255, .35);
   backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
   border-radius: 22px;
 }
-.dock-item { position: relative; display: block; width: 48px; height: 48px; padding: 0; border: 0; background: none; }
+.dock-item { position: relative; display: block; width: 48px; height: 48px; padding: 0; border: 0; background: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.dock-item:active img { transform: scale(0.92); transition-duration: 100ms; }
 .dock-item img { width: 48px; height: 48px; border-radius: 16px; object-fit: cover; transition: transform .25s var(--ease); transform-origin: 50% 100%; }
-.dock-item:hover img { transform: scale(1.25) translateY(-4px); }
+@media (hover: hover) and (pointer: fine) {
+  .dock-item:hover img { transform: scale(1.25) translateY(-4px); }
+}
 .dock-item .tip {
   position: absolute; left: 50%; bottom: calc(100% + 14px); transform: translateX(-50%);
   font-family: var(--font-ui); font-size: 12px; font-weight: 500; line-height: 16px; color: #000;
   background: rgba(255, 255, 255, .85); padding: 3px 8px; border-radius: 6px; white-space: nowrap;
   opacity: 0; pointer-events: none; transition: opacity .2s;
 }
-.dock-item:hover .tip { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .dock-item:hover .tip { opacity: 1; }
+}
 .dock-item.is-open::after {
   content: ""; position: absolute; left: 50%; bottom: -7px; width: 4px; height: 4px; margin-left: -2px;
   border-radius: 50%; background: rgba(0, 0, 0, .55);
@@ -67,12 +78,11 @@
   background: #fff; color: #000; border-radius: 12px; overflow: hidden;
   box-shadow: 0 24px 70px rgba(0, 0, 0, .35), 0 0 0 1px rgba(0, 0, 0, .08);
   font-family: var(--font-ui);
-  animation: winIn .35s var(--ease);
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
   user-select: text; -webkit-user-select: text;
 }
-@keyframes winIn { from { opacity: 0; transform: scale(.92) translateY(14px); } }
-.win.is-closing { animation: winOut .22s ease forwards; }
-@keyframes winOut { to { opacity: 0; transform: scale(.94); } }
+@starting-style { .win { opacity: 0; transform: scale(.94) translateY(10px); } }
+.win.is-closing { opacity: 0; transform: scale(.96); transition-duration: 200ms; pointer-events: none; }
 .win-bar {
   flex: none; position: relative; height: 42px; display: flex; align-items: center; gap: 8px;
   padding: 0 10px; background: #fff; border-bottom: 1px solid #ececec; cursor: grab; touch-action: none;
@@ -98,7 +108,9 @@
 .win-about .bio p + p { margin-top: 22px; }
 .win-about .cta { display: flex; justify-content: flex-end; margin: 24px 0 8px; }
 .win-about .cta a { padding: 8px 12px; border-radius: 8px; background: #f2f2f2; font-size: 16px; transition: background .2s; }
-.win-about .cta a:hover { background: #e2e2e2; }
+@media (hover: hover) and (pointer: fine) {
+  .win-about .cta a:hover { background: #e2e2e2; }
+}
 
 /* Notes */
 .win-notes { width: 720px; height: 560px; }
@@ -118,6 +130,8 @@
 .note-view p { margin-bottom: 22px; }
 .note-view p strong { display: block; font-weight: 600; }
 .note-panel[hidden] { display: none; }
+.note-panel { transition: opacity 150ms var(--ease-out); }
+@starting-style { .note-panel { opacity: 0; } }
 
 /* Proyecto (carpeta) */
 .win-project { width: 1008px; height: 590px; }
@@ -135,7 +149,9 @@
 .win-project .next button { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; }
 .win-project .next .cover { height: 320px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; }
 .win-project .next .cover img, .win-project .next .cover video { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
-.win-project .next button:hover .cover img, .win-project .next button:hover .cover video { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .win-project .next button:hover .cover img, .win-project .next button:hover .cover video { transform: scale(1.04); }
+}
 .win-project .next span { font-size: 16px; font-weight: 600; }
 
 @media (max-width: 809px) {
@@ -143,7 +159,7 @@
   .d-icon { width: 110px; margin-left: -27px; gap: 8px; }
   .d-icon .thumb { width: 56px; }
   .d-icon span { font-size: 12px; line-height: 14px; }
-  .dock { bottom: 28px; gap: 10px; padding: 8px 10px; }
+  .dock { bottom: calc(28px + env(safe-area-inset-bottom, 0px)); gap: 10px; padding: 8px 10px; }
   .dock-item, .dock-item img { width: 42px; height: 42px; border-radius: 13px; }
   .win { left: 12px !important; top: 72px !important; width: calc(100vw - 24px) !important; height: calc(100dvh - 180px) !important; }
   .win-notes .win-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
@@ -153,4 +169,10 @@
   .note-view { padding: 16px; }
   .win-project h2 { font-size: 32px; line-height: 38px; }
   .win-project .next .cover { height: 180px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .win, .win.is-closing { transform: none; }
+  @starting-style { .win { transform: none; } }
+  .dock-item img, .d-icon .thumb { transition: none; }
 }

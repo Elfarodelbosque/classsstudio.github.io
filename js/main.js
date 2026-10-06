@@ -36,7 +36,12 @@
     const html = document.documentElement;
     const overlay = $('.intro');
     const name = $('.hero-name');
-    if (!overlay || !name || !html.classList.contains('is-intro')) return Promise.resolve();
+    if (!overlay || !name || !html.classList.contains('is-intro')) {
+      if (overlay) overlay.remove();
+      return Promise.resolve();
+    }
+    // solo una vez por sesión: al volver a la Home ya no se repite
+    try { sessionStorage.setItem('classs-intro', '1'); } catch (e) {}
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     scrollTo(0, 0);
     const fonts = document.fonts ? Promise.race([document.fonts.ready, wait(2500)]) : wait(300);
@@ -72,18 +77,21 @@
     cursor.className = 'cursor';
     document.body.appendChild(cursor);
     document.documentElement.classList.add('has-cursor');
-    let x = -100, y = -100, cx = x, cy = y;
+    // posición y tamaño se animan solo con transform; el bucle se para cuando el cursor está quieto
+    let x = -100, y = -100, cx = x, cy = y, s = 1, ts = 1, running = false;
+    const loop = () => {
+      cx += (x - cx) * 0.35; cy += (y - cy) * 0.35; s += (ts - s) * 0.25;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) scale(${s})`;
+      if (Math.abs(x - cx) < 0.1 && Math.abs(y - cy) < 0.1 && Math.abs(ts - s) < 0.01) { running = false; return; }
+      requestAnimationFrame(loop);
+    };
     addEventListener('mousemove', (e) => {
       x = e.clientX; y = e.clientY;
+      ts = e.target.closest && e.target.closest('a, button, textarea, [data-cursor]') ? 3.6 : 1;
       cursor.classList.add('is-visible');
-      cursor.classList.toggle('is-link', !!e.target.closest('a, button, textarea, [data-cursor]'));
+      if (!running) { running = true; requestAnimationFrame(loop); }
     });
     document.addEventListener('mouseleave', () => cursor.classList.remove('is-visible'));
-    (function loop() {
-      cx += (x - cx) * 0.35; cy += (y - cy) * 0.35;
-      cursor.style.transform = `translate(${cx}px, ${cy}px)`;
-      requestAnimationFrame(loop);
-    })();
   }
 
   /* ---------- Cabecera: entra al cargar, se esconde al bajar y vuelve al subir ---------- */
@@ -158,7 +166,12 @@
       items.forEach((it) => it.classList.toggle('is-active', it === best));
     };
     update();
-    addEventListener('scroll', update, { passive: true });
+    let ticking = false;   // como mucho una medición por fotograma
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
     addEventListener('resize', update);
   });
 
@@ -166,16 +179,21 @@
      La tarjeta activa queda en el centro, de frente. Al bajar, la siguiente sube desde
      abajo-derecha y las anteriores se giran y se alejan hacia arriba-izquierda (orden del HTML). */
   const g3d = $('.gallery3d');
-  if (g3d) {
+  if (g3d && !reduceMotion) {   // con "reducir movimiento" el CSS las deja quietas en fila
     const cards = $$('.g3d-card', g3d);
     const n = cards.length;
+    let W = 0, H = 0, mobile = false;
+    // el tamaño solo cambia al redimensionar (cambiar width/height en cada scroll obliga a recolocar la página)
+    const size = () => {
+      mobile = innerWidth < 810;
+      W = Math.min(mobile ? innerWidth * 0.7 : Math.min(560, innerWidth * 0.39), innerHeight * 0.42 * 1.42);
+      H = W / 1.42;
+      cards.forEach((c) => { c.style.width = W + 'px'; c.style.height = H + 'px'; });
+    };
     const render = () => {
       const r = g3d.getBoundingClientRect();
       const total = r.height - innerHeight;
       const p = Math.min(1, Math.max(0, -r.top / total));
-      const mobile = innerWidth < 810;
-      const W = Math.min(mobile ? innerWidth * 0.7 : Math.min(560, innerWidth * 0.39), innerHeight * 0.42 * 1.42);
-      const H = W / 1.42;
       const active = p * (n - 1);
       cards.forEach((c, i) => {
         const d = i - active;            // distancia a la tarjeta activa
@@ -183,16 +201,20 @@
         const x = d * W * (mobile ? 0.5 : 0.8);
         const y = d * H * 1.05;
         const z = -ad * 320;
-        c.style.width = W + 'px';
-        c.style.height = H + 'px';
         c.style.transform = `translate3d(${x - W / 2}px, ${y - H / 2}px, ${z}px) rotateY(${-d * 34}deg)`;
         c.style.opacity = ad > 2.4 ? 0 : ad > 1.6 ? (2.4 - ad) / 0.8 : 1;
         c.style.zIndex = String(100 - Math.round(ad * 10));
       });
     };
+    size();
     render();
-    addEventListener('scroll', () => requestAnimationFrame(render), { passive: true });
-    addEventListener('resize', render);
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { render(); ticking = false; });
+    }, { passive: true });
+    addEventListener('resize', () => { size(); render(); });
   }
 
   /* ---------- HOME · panel de skills: tocar también revela (móvil) ---------- */

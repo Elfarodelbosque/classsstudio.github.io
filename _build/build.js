@@ -370,7 +370,8 @@ function head({ P, title, description = SITE.description, extraCss = '', intro =
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
   <meta property="og:type" content="website">
@@ -384,7 +385,7 @@ function head({ P, title, description = SITE.description, extraCss = '', intro =
   <link rel="preload" href="${P}assets/fonts/InterDisplay-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="${P}assets/fonts/InterDisplay-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="${P}css/style.css">${extraCss}${intro ? `
-  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-intro');</script>` : ''}
+  <script>try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !sessionStorage.getItem('classs-intro')) document.documentElement.classList.add('is-intro'); } catch (e) {}</script>` : ''}
 </head>`;
 }
 
