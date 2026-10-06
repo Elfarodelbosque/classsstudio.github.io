@@ -114,8 +114,12 @@ La campaña se cierra en la calle, llevando el manifiesto de Alhaja al espacio p
     gallery: [
       ['A8kN51gGymfF7oNsYxC66jZ9M.jpg', 24, 494, 684, 911], ['agIhD9pgp9xmyFUML6WvOASmd4.jpg', 718, 494, 684, 957],
       ['zZUgTRwbGuGeTw0C7qM1aoowbq0.jpg', 24, 1824, 1377, 1721],
-      ['zQ1E8dMIAa8u1CI0Mgeo2xM0.jpg', 24, 3898, 684, 957], ['QwN6s5sWxdkmXYYzgv9pZMDR9E.jpg', 24, 4865, 684, 300],
-      ['uLjdHgbupfG1bzzKvNAdaONZdc.jpg', 24, 5175, 684, 387], ['FDSo0FE03cgiyXmUvLzJItxYCc.jpg', 718, 3898, 684, 779],
+      // los antiguos mosaicos, separados en fotos sueltas (assets/img/crisis/)
+      ['zQ1E8dMIAa8u1CI0Mgeo2xM0.jpg', 24, 3898, 1462, 2048],
+      ['crisis/farola.jpg', 718, 3899, 1600, 887], ['crisis/valla.jpg', 718, 3900, 1600, 900],
+      ['crisis/anuncios-1.jpg', 24, 4865, 674, 898], ['crisis/anuncios-2.jpg', 25, 4865, 674, 898], ['crisis/anuncios-3.jpg', 26, 4865, 674, 898],
+      ['crisis/soportes-1.jpg', 24, 5175, 1014, 571], ['crisis/soportes-2.jpg', 25, 5175, 1014, 571],
+      ['crisis/soportes-3.jpg', 26, 5175, 1014, 571], ['crisis/soportes-4.jpg', 27, 5175, 1014, 571],
     ],
     texts: [
       ['Concepto', `"Cómo decorar una crisis" plantea el derrumbe emocional como un espacio doméstico que se puede diseccionar, catalogar y visitar.
@@ -135,6 +139,7 @@ La campaña se cierra en la calle, con banderolas de farola y carteles en valla 
     homeSub: 'Y tú, ¿qué sabor eres?', sub: 'WHAT FLAVOR ARE YOU TODAY? Eat your summer.',
     desc: 'Una campaña para Etnia Barcelona que transforma la personalidad en sabor, utilizando color, humor y metáforas visuales para representar distintos moods del verano.',
     home: ['rdzhkpFiV4CJ8BFuG32XnRnbj0.gif', '5AzHMcqkLABcEIGRd8CJTYsMKYU.jpg'],
+    homeNatural: 1108 / 1463,   // en la Home la portada se ve entera (sin recortar)
     work: ['Dy28K1xZxWrGWKrARJvVwL4AZRw.gif', 'X7btTx17hMtNzUgG81xbNorc0OI.jpg'],
     meta: {
       Category: 'Campaign', Role: 'Art Direction, Concept Development, Visual Design',
@@ -311,28 +316,33 @@ Los copys actúan como comentarios irónicos en segunda persona, manteniendo el 
     ],
   },
 
-  /* Proyecto añadido (no estaba en Framer) — imágenes en assets/img/aquiestamos/ */
-  aquiestamos: {
-    name: 'Aquí Estamos', category: 'Fashion Campaign',
+  /* Proyecto de cliente para El Faro del Bosque — material en assets/img/saladejuntas/ y assets/video/
+     TODO: los textos (subtítulo, descripción, Concepto…) son todavía los de "Aquí Estamos" */
+  saladejuntas: {
+    name: 'Sala de Juntas', category: 'Fashion Campaign',
     homeSub: 'El Faro del Bosque — OI26', sub: 'El Faro del Bosque — Otoño/Invierno 26',
     desc: 'Campaña OI26 para El Faro del Bosque. Las fareras —las que cuidan la luz, las que vuelven cada temporada— vistiendo la colección en los interiores cálidos y las alfombras de color que definen la marca.',
-    home: ['aquiestamos/portada.jpg', 'aquiestamos/lb15.jpg'],
-    work: ['aquiestamos/portada.jpg', 'aquiestamos/lb01.jpg'],
-    alt: 'Aquí Estamos — El Faro del Bosque presenta OT/IN, cartel de campaña',
+    home: ['sala-de-juntas.mp4', 'saladejuntas/01.jpg'],
+    work: ['sala-de-juntas.mp4', 'saladejuntas/01.jpg'],
+    web: { url: 'https://farodelbosque.es', label: 'farodelbosque.es' },
     meta: {
-      Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Visual Direction',
-      Deliverables: 'Hero video, Lookbook, Catalog video, Social & WhatsApp content',
+      Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Visual Direction, Web Design',
+      Deliverables: 'Hero video, Lookbook, Catalog video, Social & WhatsApp content, Website',
       Tools: 'Photoshop, Premiere', Date: 'Octubre 2026', Type: 'Client project',
     },
-    // filas manuales: [ [columna1], [columna2], ... ]  con [archivo, ancho, alto]
+    // orden: vídeo de portada → tira de fotogramas → fotos elegidas.  [archivo, ancho, alto]
     blocks: [
-      [[['aquiestamos/portada.jpg', 918, 634]]],
+      [[['sala-de-juntas.mp4', 1280, 720]]],
+      [[['saladejuntas/frames.webp', 2000, 563]]],
       'Concepto',
-      [[['aquiestamos/lb01.jpg', 770, 958]], [['aquiestamos/lb15.jpg', 762, 950]]],
+      [[['saladejuntas/01.jpg', 814, 887]], [['saladejuntas/02.jpg', 905, 1122]], [['saladejuntas/03.jpg', 921, 1142]],
+       [['saladejuntas/04.jpg', 919, 635]], [['saladejuntas/05.jpg', 773, 967]], [['saladejuntas/06.jpg', 777, 972]],
+       [['saladejuntas/07.jpg', 909, 1129]], [['saladejuntas/08.jpg', 778, 811]], [['saladejuntas/09.jpg', 777, 1040]]],
       'Dirección visual',
-      [[['aquiestamos/lb08.jpg', 770, 806]], [['aquiestamos/lb22.jpg', 766, 642]], [['aquiestamos/lb30.jpg', 782, 806]]],
+      [[['saladejuntas/10.jpg', 929, 1153]], [['saladejuntas/11.jpg', 761, 944]], [['saladejuntas/12.jpg', 768, 955]],
+       [['saladejuntas/13.jpg', 769, 955]], [['saladejuntas/14.jpg', 909, 494]], [['saladejuntas/15.jpg', 902, 1119]],
+       [['saladejuntas/16.jpg', 926, 1150]], [['saladejuntas/17.jpg', 702, 936]]],
       'Sistema de campaña',
-      [[['aquiestamos/hero-poster.jpg', 1280, 720]], [['aquiestamos/catalogo-poster.jpg', 1280, 720]]],
     ],
     texts: [
       ['Concepto', `Aquí Estamos habla de volver. De las fareras que cada temporada regresan a encender la luz y, este año, la traen puesta.
@@ -350,7 +360,7 @@ Todo comparte la misma gramática visual: madera, alfombra de color y el sello t
 };
 
 /* Orden de aparición (el mismo en Home y Work) */
-const HOME_ORDER = ['aquiestamos', 'alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein'];
+const HOME_ORDER = ['saladejuntas', 'alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein'];
 const WORK_ORDER = HOME_ORDER;
 /* "More Projects" en cada proyecto: los 2 primeros de esta lista que no sean el actual */
 const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecorarunacrisis'];
@@ -432,8 +442,10 @@ const catLabel = (p) => `${p.category} · ${kindOf(p)}`;
 function projectRow(P, key, { useWork = false } = {}) {
   const p = PROJECTS[key];
   const [big, small] = useWork ? p.work : p.home;
+  // homeNatural: la portada se muestra entera con su proporción real en lugar de recortada
+  const natural = !useWork && p.homeNatural;
   return `
-      <a class="project" href="${P}article/${key}/">
+      <a class="project${natural ? ' project--natural' : ''}" href="${P}article/${key}/"${natural ? ` style="--ar:${p.homeNatural.toFixed(4)}"` : ''}>
         <div class="project-media">${media(P, big, p.alt || `${p.name}, portada del proyecto`)}</div>
         <div class="project-info">
           <div class="project-thumb">${media(P, small, '')}</div>
@@ -696,39 +708,42 @@ ${scripts(P, `\n  <script src="${P}js/labbb.js" defer></script>`)}`;
 /* ---------------------------------------------------------
    ARTÍCULOS
    --------------------------------------------------------- */
-/* Agrupa las medidas de Framer en filas → columnas → imágenes */
-function groupGallery(items) {
-  const sorted = items.map(([f, x, y, w, h]) => ({ f, x, y, w, h })).sort((a, b) => a.y - b.y || a.x - b.x);
+/* ---------------------------------------------------------
+   GALERÍA ARMÓNICA
+   Las imágenes se reparten en filas: cada fila llena el ancho y todas sus fotos
+   tienen la misma altura. Se juntan fotos hasta que la suma de proporciones
+   (ancho/alto) llega a ROW_TARGET, así ninguna fila queda más alta que la pantalla.
+   Las panorámicas (proporción ≥ WIDE) van solas.
+   --------------------------------------------------------- */
+const ROW_TARGET = 1.9;
+const WIDE = 1.5;
+function packRows(items) {
   const rows = [];
-  for (const it of sorted) {
-    const last = rows[rows.length - 1];
-    if (last && it.y < last.bottom - 2) { last.items.push(it); last.bottom = Math.max(last.bottom, it.y + it.h); }
-    else rows.push({ top: it.y, bottom: it.y + it.h, items: [it] });
+  let row = [], sum = 0;
+  for (const it of items) {
+    const a = it[1] / it[2];
+    if (a >= WIDE && row.length === 0) { rows.push([it]); continue; }
+    row.push(it); sum += a;
+    if (sum >= ROW_TARGET || row.length === 3) { rows.push(row); row = []; sum = 0; }
   }
-  return rows.map((r) => {
-    if (r.items.length === 1) {
-      const it = r.items[0];
-      return { top: r.top, cols: [[[it.f, it.w, it.h]]], single: it.w };
-    }
-    const left = r.items.filter((i) => i.x < 700).sort((a, b) => a.y - b.y);
-    const right = r.items.filter((i) => i.x >= 700).sort((a, b) => a.y - b.y);
-    return { top: r.top, cols: [left, right].filter((c) => c.length).map((c) => c.map((i) => [i.f, i.w, i.h])) };
-  });
+  if (row.length) rows.push(row);
+  return rows;
 }
 
 /* Texto alternativo propio para cada imagen: "Alhaja, imagen 3 de 8" */
 let imgCounter = { n: 0, total: 0 };
-function renderBlock(P, b, alt) {
-  const fig = ([f, w, h]) => {
-    imgCounter.n += 1;
-    const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
-    const first = imgCounter.n === 1;   // la primera imagen recibe la portada en la transición desde Home/Work
-    return `<figure class="${first ? 'art-cover' : 'reveal'}" style="aspect-ratio:${w}/${h}${b.single && b.single < 1300 ? `;width:${((b.single / 1377) * 100).toFixed(2)}%` : ''}">${media(P, f, a, first)}</figure>`;
-  };
-  if (b.cols.length === 1 && b.cols[0].length === 1) {
-    return `\n    <div class="art-block single">${fig(b.cols[0][0], 0)}</div>`;
-  }
-  return `\n    <div class="art-block">${b.cols.map((c) => `<div class="col">${c.map(fig).join('')}</div>`).join('')}</div>`;
+function renderRows(P, items, alt) {
+  return packRows(items).map((row) => {
+    const sum = row.reduce((s, [, w, h]) => s + w / h, 0);
+    const figs = row.map(([f, w, h]) => {
+      if (!isVideo(f)) imgCounter.n += 1;
+      const first = !renderRows.coverDone;   // la primera pieza recibe la portada en la transición desde Home/Work
+      renderRows.coverDone = true;
+      const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
+      return `<figure class="${first ? 'art-cover' : 'reveal'}" style="--r:${(w / h).toFixed(4)}">${media(P, f, a, first)}</figure>`;
+    }).join('');
+    return `\n    <div class="art-row" style="--a:${sum.toFixed(4)};--n:${row.length}">${figs}</div>`;
+  }).join('');
 }
 
 const renderText = ([t, body]) => `
@@ -742,18 +757,30 @@ function buildArticle(key) {
     ? p.blocks.filter((b) => typeof b !== 'string').flat(2)
     : p.gallery;
   imgCounter = { n: 0, total: allImgs.filter((m) => !isVideo(m[0])).length };
+  renderRows.coverDone = false;
+  // Secuencia: tramos de imágenes separados por los textos
+  const seq = [];
   if (p.blocks) {
     let ti = 0;
     for (const b of p.blocks) {
-      if (typeof b === 'string') body += renderText(p.texts[ti++]);
-      else body += renderBlock(P, { cols: b }, p.name);
+      if (typeof b === 'string') seq.push({ text: p.texts[ti++] });
+      else seq.push({ items: b.flat(1) });
     }
   } else {
-    const parts = [
-      ...groupGallery(p.gallery).map((b) => ({ y: b.top, html: renderBlock(P, b, p.name) })),
-      ...p.texts.map((t) => ({ y: t[2], html: renderText(t) })),
-    ].sort((a, b) => a.y - b.y);
-    body = parts.map((x) => x.html).join('');
+    const imgs = p.gallery.map(([f, x, y, w, h]) => ({ y, x, it: [f, w, h] }));
+    const marks = [...p.texts.map((t) => ({ y: t[2], x: 0, text: t })), ...imgs].sort((a, b) => a.y - b.y || a.x - b.x);
+    for (const m of marks) {
+      if (m.text) seq.push({ text: m.text });
+      else if (seq.length && seq[seq.length - 1].items) seq[seq.length - 1].items.push(m.it);
+      else seq.push({ items: [m.it] });
+    }
+  }
+  // tramos de imágenes seguidos se empaquetan juntos
+  for (let i = 0; i < seq.length; i++) {
+    if (seq[i].text) { body += renderText(seq[i].text); continue; }
+    let items = seq[i].items;
+    // el vídeo/portada inicial y una tira panorámica no se mezclan con las fotos
+    body += renderRows(P, items, p.name);
   }
   const more = MORE_ORDER.filter((k) => k !== key).slice(0, 2);
 
@@ -765,7 +792,8 @@ function buildArticle(key) {
     <div class="reveal">
       <h1>${esc(p.name)}</h1>
       <p class="t-body sub">${esc(p.sub)}</p>
-      <p class="t-body desc">${esc(p.desc)}</p>
+      <p class="t-body desc">${esc(p.desc)}</p>${p.web ? `
+      <a class="art-web" href="${p.web.url}" target="_blank" rel="noopener">${br('Ver la web')}<span>${esc(p.web.label)}</span>${arrowSvg}</a>` : ''}
     </div>
     <dl class="art-meta reveal" style="--d:.1s">
 ${Object.entries(p.meta).map(([k, v]) => `      <div><dt>${esc(k)}:</dt><dd>${esc(v)}</dd></div>`).join('\n')}

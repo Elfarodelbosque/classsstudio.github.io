@@ -274,7 +274,7 @@
      Al pulsar un proyecto, su portada recibe el nombre "cover"; en la página del proyecto
      la primera imagen se llama igual, así que el navegador la transforma de una a otra. */
   if ('onpagereveal' in window) {
-    const coverOf = (link) => link && link.querySelector('.project-media img, .media > img');
+    const coverOf = (link) => link && link.querySelector('.project-media img, .project-media video, .media > img, .media > video');
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a.project, a.work-card');
       if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
@@ -289,13 +289,13 @@
       if (!m) return;
       const link = $(`a.project[href$="article/${m[1]}/"], a.work-card[href$="article/${m[1]}/"]`);
       const img = coverOf(link);
-      if (!img || $('.art-cover img')) return;
+      if (!img || $('.art-cover img, .art-cover video')) return;
       img.style.viewTransitionName = 'cover';
       try { await e.viewTransition.finished; } catch (err) {}
       img.style.viewTransitionName = '';
     });
     // Al volver con el botón atrás, la página queda en caché: limpiar el nombre
-    addEventListener('pageshow', () => $$('.project-media img, .media > img').forEach((el) => { el.style.viewTransitionName = ''; }));
+    addEventListener('pageshow', () => $$('.project-media img, .project-media video, .media > img, .media > video').forEach((el) => { el.style.viewTransitionName = ''; }));
   }
 
   /* ---------- El nombre se rompe al bajar / "Classs" se recompone al final ----------

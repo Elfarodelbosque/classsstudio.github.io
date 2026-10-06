@@ -239,6 +239,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .project:hover .project-media img { transform: scale(1.04); }
 }
 .project-info { position: relative; }
+.project--natural .project-media { width: auto; height: 100%; aspect-ratio: var(--ar); justify-self: start; }
 .project-thumb {
   position: absolute; left: 32%; top: 120px; width: 215px; height: 226px;
   border-radius: var(--radius); overflow: hidden;
@@ -467,6 +468,22 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .art-block figure img, .art-block figure video { width: 100%; height: 100%; object-fit: cover; }
 .art-block.single { justify-content: center; }
 .art-block.single figure { width: 100%; flex: none; }
+/* Galería armónica: cada fila llena el ancho con fotos a la misma altura
+   (flex-grow = proporción de cada foto) y nunca supera el 82 % del alto de la pantalla */
+.art-row {
+  display: flex; gap: 10px; margin: 0 auto 10px;
+  max-width: min(100%, calc(var(--a) * 82vh + (var(--n, 1) - 1) * 10px));
+}
+.art-row figure { flex: var(--r) 1 0; min-width: 0; aspect-ratio: var(--r); border-radius: var(--radius-lg); overflow: hidden; background: #0b0b0b; }
+.art-row figure img, .art-row figure video { width: 100%; height: 100%; object-fit: cover; }
+.art-web { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 16px; font-weight: 600; line-height: 24px; min-height: 44px; }
+.art-web .br { color: var(--red); }
+.art-web span:not(.br) { color: var(--grey-light); }
+.art-web .arrow { width: 14px; height: 14px; color: var(--red); transition: transform 280ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .art-web:hover .arrow { transform: translate(3px, -3px); }
+  .art-web:hover span:not(.br) { color: #fff; }
+}
 .art-text { width: 640px; max-width: 100%; margin: 105px auto 104px; }
 .art-text h2 { font-size: 17px; font-weight: 500; line-height: 25.2px; margin-bottom: 24px; }
 .art-text p { font-size: 17px; font-weight: 500; line-height: 24px; color: var(--grey); white-space: pre-line; }
@@ -578,6 +595,9 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .art-head h1 { font-size: 48px; line-height: 50px; letter-spacing: -1.2px; }
   .art-body { padding-top: 40px; }
   .art-block { flex-direction: column; }
+  .art-row { flex-direction: column; max-width: 100%; }
+  .art-row figure { flex: none; width: 100%; border-radius: 14px; }
+  .project--natural .project-media { width: 100%; height: auto; }
   .art-block .col { width: 100%; }
   .art-block figure { border-radius: 14px; width: 100% !important; }
   .art-text { margin: 56px auto; }
@@ -593,7 +613,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
    ========================================================= */
 @view-transition { navigation: auto; }
 .site-header { view-transition-name: site-header; }
-.art-cover img { view-transition-name: cover; }
+.art-cover img, .art-cover video { view-transition-name: cover; }
 ::view-transition-group(cover) {
   animation-duration: 640ms;
   animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
