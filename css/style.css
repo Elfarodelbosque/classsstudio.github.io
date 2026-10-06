@@ -244,8 +244,9 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   border-radius: var(--radius); overflow: hidden;
 }
 .project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+/* el título se centra sobre la miniatura (32 % + mitad de su ancho) */
 .project-title {
-  position: absolute; left: 0; right: 0; top: 217px; text-align: center;
+  position: absolute; left: calc(32% + 107.5px); top: 208px; transform: translateX(-50%); white-space: nowrap; text-align: center;
   font-size: 49px; font-weight: 500; line-height: 50.6px; letter-spacing: -0.8px;
   transition: color .6s ease;
 }
@@ -398,8 +399,9 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .feedback .note:empty { display: none; }
 @starting-style { .feedback .note { opacity: 0; transform: translateY(4px); } }
 .footer-text { width: 588px; max-width: calc(100% - 2 * var(--pad)); margin: 64px auto 30px; text-align: center; }
-.site-footer { margin-top: 260px; padding-bottom: 24px; }
-.site-footer .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.047em; margin: 0 var(--pad); width: auto; }
+/* el padding (no el margen) da el aire lateral: así fitText lo descuenta y la última s no se sale */
+.site-footer { margin-top: 72px; padding: 0 var(--pad); }
+.site-footer .fit { font-weight: 600; line-height: 0.78; letter-spacing: -0.047em; width: auto; }
 
 /* =========================================================
    WORK
@@ -489,8 +491,8 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .hero-quote .t-h3, .project-title, .t-h3 { font-size: 38px; line-height: 40px; }
   .hero-card { width: 300px; height: 300px; }
   .project { height: 480px; }
-  .project-thumb { width: 170px; height: 180px; margin-left: -95px; top: 90px; }
-  .project-title { top: 170px; }
+  .project-thumb { width: 170px; height: 180px; top: 90px; }
+  .project-title { top: 158px; left: calc(32% + 85px); }
   .project-text { top: 320px; width: 100%; }
   .labbb-copy .l2 { left: 22%; }
   .labbb-copy .l3 { left: auto; right: 0; }
@@ -559,7 +561,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .contact-links { gap: 8px 24px; margin-top: 28px; }
   .contact-links a { font-size: 20px; line-height: 32px; --lh: 32px; }
   .feedback { margin: 40px var(--pad) 48px; }
-  .site-footer { margin-top: 140px; }
+  .site-footer { margin-top: 48px; }
 
   .work { grid-template-columns: 1fr; padding-top: 110px; }
   .work-title { position: static; height: auto; margin-bottom: 32px; }
