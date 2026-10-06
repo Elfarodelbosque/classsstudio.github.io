@@ -239,19 +239,22 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .project:hover .project-media img { transform: scale(1.04); }
 }
 .project-info { position: relative; }
-.project--natural .project-media { width: auto; height: 100%; aspect-ratio: var(--ar); justify-self: start; }
+/* portada a su proporción real, centrada en su columna */
+.project--natural .project-media { width: auto; height: 100%; aspect-ratio: var(--ar); justify-self: center; transform-origin: 50% 50%; }
+/* miniatura entera: tamaño propio (--tw/--th), siempre centrada en el mismo punto que el título */
 .project-thumb {
-  position: absolute; left: 32%; top: 120px; width: 215px; height: 226px;
+  position: absolute; left: calc(32% + 107.5px); top: calc(233px - var(--th, 226px) / 2);
+  width: var(--tw, 215px); height: var(--th, 226px); transform: translateX(-50%);
   border-radius: var(--radius); overflow: hidden;
 }
-.project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.project-thumb img, .project-thumb video { width: 100%; height: 100%; object-fit: cover; }
 /* el título se centra sobre la miniatura (32 % + mitad de su ancho) */
 .project-title {
   position: absolute; left: calc(32% + 107.5px); top: 208px; transform: translateX(-50%); white-space: nowrap; text-align: center;
   font-size: 49px; font-weight: 500; line-height: 50.6px; letter-spacing: -0.8px;
   transition: color .6s ease;
 }
-.project-text { position: absolute; left: 0; top: 440px; width: 341px; max-width: 100%; }
+.project-text { position: absolute; left: 0; bottom: 0; width: 341px; max-width: 100%; }
 .project-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
 .project-name { display: none; }
 .project-cat { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey-light); }
@@ -474,7 +477,17 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   display: flex; gap: 10px; margin: 0 auto 10px;
   max-width: min(100%, calc(var(--a) * 82vh + (var(--n, 1) - 1) * 10px));
 }
-.art-row figure { flex: var(--r) 1 0; min-width: 0; aspect-ratio: var(--r); border-radius: var(--radius-lg); overflow: hidden; background: #0b0b0b; }
+.art-row figure { flex: var(--r) 1 0; min-width: 0; aspect-ratio: var(--r); overflow: hidden; background: #0b0b0b; }
+
+/* Tira de fotogramas: más pequeña y separada del vídeo */
+.art-strip { max-width: 72%; margin: 120px auto; }
+.art-strip figure { aspect-ratio: var(--r); background: #0b0b0b; }
+.art-strip img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Composición editorial (Sala de Juntas): rejilla de 12 columnas con desfases verticales */
+.ed-row { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 24px; align-items: start; margin-bottom: 120px; }
+.ed-fig { grid-column: var(--col) / span var(--span); margin-top: var(--drop, 0); aspect-ratio: var(--r); background: #0b0b0b; }
+.ed-fig img, .ed-fig video { width: 100%; height: 100%; object-fit: cover; }
 .art-row figure img, .art-row figure video { width: 100%; height: 100%; object-fit: cover; }
 .art-web { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 16px; font-weight: 600; line-height: 24px; min-height: 44px; }
 .art-web .br { color: var(--red); }
@@ -508,9 +521,9 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .hero-quote .t-h3, .project-title, .t-h3 { font-size: 38px; line-height: 40px; }
   .hero-card { width: 300px; height: 300px; }
   .project { height: 480px; }
-  .project-thumb { width: 170px; height: 180px; top: 90px; }
+  .project-thumb { left: calc(32% + 85px); top: calc(178px - var(--th, 226px) * .39); width: calc(var(--tw, 215px) * .78); height: calc(var(--th, 226px) * .78); }
   .project-title { top: 158px; left: calc(32% + 85px); }
-  .project-text { top: 320px; width: 100%; }
+  .project-text { width: 100%; }
   .labbb-copy .l2 { left: 22%; }
   .labbb-copy .l3 { left: auto; right: 0; }
   .contact-mail { left: 55%; }
@@ -596,7 +609,11 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .art-body { padding-top: 40px; }
   .art-block { flex-direction: column; }
   .art-row { flex-direction: column; max-width: 100%; }
-  .art-row figure { flex: none; width: 100%; border-radius: 14px; }
+  .art-row figure { flex: none; width: 100%; }
+  .art-strip { max-width: 100%; margin: 48px 0; }
+  .ed-row { display: flex; flex-direction: column; gap: 24px; margin-bottom: 24px; }
+  .ed-fig { margin-top: 0; width: 86%; }
+  .ed-fig:nth-child(even) { align-self: flex-end; width: 72%; }
   .project--natural .project-media { width: 100%; height: auto; }
   .art-block .col { width: 100%; }
   .art-block figure { border-radius: 14px; width: 100% !important; }
@@ -634,4 +651,5 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 /* =========================================================
    OVERDRIVE 3 · el nombre se rompe al hacer scroll / "Classs" se recompone
    ========================================================= */
-.scatter-ch { display: inline-block; will-change: transform; white-space: pre; }
+.scatter-ch { display: inline-block; will-change: transform; white-space: pre; pointer-events: none; }
+.site-footer, .hero-name { pointer-events: none; }

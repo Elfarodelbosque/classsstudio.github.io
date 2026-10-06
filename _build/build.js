@@ -119,7 +119,7 @@ La campaña se cierra en la calle, llevando el manifiesto de Alhaja al espacio p
       ['crisis/farola.jpg', 718, 3899, 1600, 887], ['crisis/valla.jpg', 718, 3900, 1600, 900],
       ['crisis/anuncios-1.jpg', 24, 4865, 674, 898], ['crisis/anuncios-2.jpg', 25, 4865, 674, 898], ['crisis/anuncios-3.jpg', 26, 4865, 674, 898],
       ['crisis/soportes-1.jpg', 24, 5175, 1014, 571], ['crisis/soportes-2.jpg', 25, 5175, 1014, 571],
-      ['crisis/soportes-3.jpg', 26, 5175, 1014, 571], ['crisis/soportes-4.jpg', 27, 5175, 1014, 571],
+      ['crisis/soportes-3.jpg', 26, 5175, 1014, 571], ['crisis/banner-bienvenida.jpg', 27, 5175, 1200, 427],
     ],
     texts: [
       ['Concepto', `"Cómo decorar una crisis" plantea el derrumbe emocional como un espacio doméstico que se puede diseccionar, catalogar y visitar.
@@ -140,6 +140,7 @@ La campaña se cierra en la calle, con banderolas de farola y carteles en valla 
     desc: 'Una campaña para Etnia Barcelona que transforma la personalidad en sabor, utilizando color, humor y metáforas visuales para representar distintos moods del verano.',
     home: ['rdzhkpFiV4CJ8BFuG32XnRnbj0.gif', '5AzHMcqkLABcEIGRd8CJTYsMKYU.jpg'],
     homeNatural: 1108 / 1463,   // en la Home la portada se ve entera (sin recortar)
+    rows: [['Dy28K1xZxWrGWKrARJvVwL4AZRw.gif', 'X7btTx17hMtNzUgG81xbNorc0OI.jpg', 'dU5JoomG66SFs15298cwILi9YE.jpg', 'seyMbA0PHFAPcgMOGdF4OLI8hRg.jpg']],
     work: ['Dy28K1xZxWrGWKrARJvVwL4AZRw.gif', 'X7btTx17hMtNzUgG81xbNorc0OI.jpg'],
     meta: {
       Category: 'Campaign', Role: 'Art Direction, Concept Development, Visual Design',
@@ -248,6 +249,9 @@ Esta estructura permite extender la campaña a distintos formatos, desde estáti
     homeSub: 'The New Care of Nature', sub: 'The New Care of Nature',
     desc: 'Una marca que explora una nueva relación entre naturaleza y tecnología a través de un universo visual digital.',
     home: ['9gpLwdabreq5UQF0XGXlJ5E5MIE.gif', '2ENSK9Y9zIRejhitPfO9FKrwEQ.gif'],
+    homeNatural: 720 / 1126,   // en la Home la portada se ve entera (sin recortar)
+    // filas fijas de la galería (el resto se coloca solo): las 4 últimas en una fila, orden 4-1-2-3
+    rows: [['13JQx4llC8wltB3fuBlcZtHWWH8.webp', 'bK2hCqMJAFNdd9ZINczReN6i0.gif', 'IzQUzsDxuQMlOVLlLRhXddsQ.webp', 'JywkOF5ViD462bSv6Is4iSivuo.gif']],
     work: ['pL4UU5K0Y77a427w6DOrTAJjc.gif', '2ENSK9Y9zIRejhitPfO9FKrwEQ.gif'],
     alt: 'Animación de una pieza de Harste flotando entre formas orgánicas y texturas translúcidas.',
     meta: {
@@ -287,6 +291,11 @@ La web funciona como una extensión del universo de la marca, mezclando editoria
     desc: 'Una reinterpretación del lenguaje visual provocador de Diesel que explora el impulso, la actitud y la estética de las malas decisiones.',
     home: ['SAlpxG7ybPzf7l3V2aYHeGgfSs.jpg', 'dxFjXKSauux0rjWCKCqaGB3o.jpg'],
     work: ['LYKphccRYRNEZkTS09TrzSjU8yk.jpg', '3tcWvYw1ftN162N5wiyQtEESY8.jpg'],
+    // primera y última sección: dos y dos
+    rows: [
+      ['LYKphccRYRNEZkTS09TrzSjU8yk.jpg', '3tcWvYw1ftN162N5wiyQtEESY8.jpg'], ['oKskLWn7ghL1820lD6JQzSh2DY.jpg', '5ZPeD7mA3IKPr6xeqbSJgAp0ebU.jpg'],
+      ['QyJsUIzDQdIrRy5ONASGyrmOugs.jpg', 'sDQ1jaepXNY6JxUdDBhSpqL2A.jpg'], ['Km3pjmQLFpmvuFdfjHjFnMAg4s.jpg', 'f2ncV3ySNXMMuaerKoFVRDrVyBA.jpg'],
+    ],
     meta: {
       Category: 'Campaign', Role: 'Art Direction, Concept Development',
       Deliverables: 'Campaign visuals, Digital content',
@@ -322,26 +331,34 @@ Los copys actúan como comentarios irónicos en segunda persona, manteniendo el 
     name: 'Sala de Juntas', category: 'Fashion Campaign',
     homeSub: 'El Faro del Bosque — OI26', sub: 'El Faro del Bosque — Otoño/Invierno 26',
     desc: 'Campaña OI26 para El Faro del Bosque. Las fareras —las que cuidan la luz, las que vuelven cada temporada— vistiendo la colección en los interiores cálidos y las alfombras de color que definen la marca.',
-    home: ['sala-de-juntas.mp4', 'saladejuntas/01.jpg'],
-    work: ['sala-de-juntas.mp4', 'saladejuntas/01.jpg'],
+    home: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
+    work: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
     web: { url: 'https://farodelbosque.es', label: 'farodelbosque.es' },
     meta: {
       Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Visual Direction, Web Design',
       Deliverables: 'Hero video, Lookbook, Catalog video, Social & WhatsApp content, Website',
       Tools: 'Photoshop, Premiere', Date: 'Octubre 2026', Type: 'Client project',
     },
-    // orden: vídeo de portada → tira de fotogramas → fotos elegidas.  [archivo, ancho, alto]
+    // orden: vídeo de portada → tira de fotogramas (más pequeña y con aire) → fotos en composición editorial
     blocks: [
       [[['sala-de-juntas.mp4', 1280, 720]]],
-      [[['saladejuntas/frames.webp', 2000, 563]]],
+      { strip: ['saladejuntas/frames.webp', 2000, 563] },
       'Concepto',
-      [[['saladejuntas/01.jpg', 814, 887]], [['saladejuntas/02.jpg', 905, 1122]], [['saladejuntas/03.jpg', 921, 1142]],
-       [['saladejuntas/04.jpg', 919, 635]], [['saladejuntas/05.jpg', 773, 967]], [['saladejuntas/06.jpg', 777, 972]],
-       [['saladejuntas/07.jpg', 909, 1129]], [['saladejuntas/08.jpg', 778, 811]], [['saladejuntas/09.jpg', 777, 1040]]],
+      /* Composición editorial sobre una rejilla de 12 columnas:
+         [archivo, columna inicial, columnas que ocupa, bajada en vh (desfase vertical)] */
+      { ed: [
+        [['saladejuntas/02.jpg', 2, 5], ['saladejuntas/03.jpg', 8, 4, 14]],
+        [['saladejuntas/04.jpg', 4, 7]],
+        [['saladejuntas/05.jpg', 1, 4], ['saladejuntas/06.jpg', 6, 3, 20], ['saladejuntas/07.jpg', 10, 3, 6]],
+      ] },
       'Dirección visual',
-      [[['saladejuntas/10.jpg', 929, 1153]], [['saladejuntas/11.jpg', 761, 944]], [['saladejuntas/12.jpg', 768, 955]],
-       [['saladejuntas/13.jpg', 769, 955]], [['saladejuntas/14.jpg', 909, 494]], [['saladejuntas/15.jpg', 902, 1119]],
-       [['saladejuntas/16.jpg', 926, 1150]], [['saladejuntas/17.jpg', 702, 936]]],
+      { ed: [
+        [['saladejuntas/08.jpg', 2, 3], ['saladejuntas/09.jpg', 6, 3, 12], ['saladejuntas/10.jpg', 9, 4]],
+        [['saladejuntas/11.jpg', 2, 4], ['saladejuntas/12.jpg', 7, 4, 16]],
+        [['saladejuntas/14.jpg', 1, 7], ['saladejuntas/13.jpg', 9, 3, 10]],
+        [['saladejuntas/15.jpg', 3, 5], ['saladejuntas/16.jpg', 8, 4, 18]],
+        [['saladejuntas/17.jpg', 10, 3]],
+      ] },
       'Sistema de campaña',
     ],
     texts: [
@@ -362,7 +379,7 @@ Todo comparte la misma gramática visual: madera, alfombra de color y el sello t
 /* Orden de aparición (el mismo en Home y Work) */
 const HOME_ORDER = ['saladejuntas', 'alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein'];
 const WORK_ORDER = HOME_ORDER;
-/* "More Projects" en cada proyecto: los 2 primeros de esta lista que no sean el actual */
+/* (sin uso: More Projects ahora muestra los dos siguientes de HOME_ORDER) */
 const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecorarunacrisis'];
 
 /* ---------------------------------------------------------
@@ -375,6 +392,33 @@ const media = (P, f, alt = '', eager = false) =>
   isVideo(f)
     ? `<video src="${src(P, f)}" autoplay muted loop playsinline preload="metadata"></video>`
     : `<img src="${src(P, f)}" alt="${esc(alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+/* Ancho y alto reales de una imagen o vídeo de assets/ (jpg, png, gif, webp, mp4) */
+function dims(f) {
+  const file = path.join(ROOT, isVideo(f) ? 'assets/video' : 'assets/img', f);
+  const b = fs.readFileSync(file);
+  if (isVideo(f)) {
+    for (let i = b.indexOf('tkhd'); i > 0; i = b.indexOf('tkhd', i + 4)) {
+      const end = i - 4 + b.readUInt32BE(i - 4), w = b.readUInt32BE(end - 8) / 65536, h = b.readUInt32BE(end - 4) / 65536;
+      if (w && h) return [w, h];
+    }
+  }
+  if (b.slice(0, 4).toString() === 'RIFF') {
+    const t = b.slice(12, 16).toString();
+    if (t === 'VP8X') return [1 + b.readUIntLE(24, 3), 1 + b.readUIntLE(27, 3)];
+    if (t === 'VP8 ') return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
+    if (t === 'VP8L') { const n = b.readUInt32LE(21); return [1 + (n & 0x3fff), 1 + ((n >> 14) & 0x3fff)]; }
+  }
+  if (b[0] === 0x89) return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  if (b.slice(0, 3).toString() === 'GIF') return [b.readUInt16LE(6), b.readUInt16LE(8)];
+  for (let i = 2; i < b.length;) {
+    if (b[i] !== 0xff) { i++; continue; }
+    const m = b[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(m)) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
+    i += 2 + b.readUInt16BE(i + 2);
+  }
+  return [4, 3];
+}
+
 /* Flecha dibujada (en lugar del carácter ↗) */
 const arrowSvg = `<svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg>`;
 const roll = (t) => `<span class="roll"><span>${esc(t)}</span><span aria-hidden="true">${esc(t)}</span></span>`;
@@ -444,11 +488,15 @@ function projectRow(P, key, { useWork = false } = {}) {
   const [big, small] = useWork ? p.work : p.home;
   // homeNatural: la portada se muestra entera con su proporción real en lugar de recortada
   const natural = !useWork && p.homeNatural;
+  // la miniatura se ve entera: alto máximo 226 px, ancho máximo 320 px, con su proporción real
+  const [tw, th] = dims(small);
+  const ta = tw / th;
+  const tW = Math.round(Math.min(320, 226 * ta)), tH = Math.round(tW / ta);
   return `
       <a class="project${natural ? ' project--natural' : ''}" href="${P}article/${key}/"${natural ? ` style="--ar:${p.homeNatural.toFixed(4)}"` : ''}>
         <div class="project-media">${media(P, big, p.alt || `${p.name}, portada del proyecto`)}</div>
         <div class="project-info">
-          <div class="project-thumb">${media(P, small, '')}</div>
+          <div class="project-thumb" style="--tw:${tW}px;--th:${tH}px">${media(P, small, '')}</div>
           <h3 class="project-title">${esc(p.name)}</h3>
           <div class="project-text">
             <p class="project-meta"><span class="project-name">${esc(p.name)}</span><span class="project-cat">${esc(catLabel(p))}</span></p>
@@ -732,18 +780,43 @@ function packRows(items) {
 
 /* Texto alternativo propio para cada imagen: "Alhaja, imagen 3 de 8" */
 let imgCounter = { n: 0, total: 0 };
-function renderRows(P, items, alt) {
-  return packRows(items).map((row) => {
-    const sum = row.reduce((s, [, w, h]) => s + w / h, 0);
-    const figs = row.map(([f, w, h]) => {
-      if (!isVideo(f)) imgCounter.n += 1;
-      const first = !renderRows.coverDone;   // la primera pieza recibe la portada en la transición desde Home/Work
-      renderRows.coverDone = true;
-      const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
-      return `<figure class="${first ? 'art-cover' : 'reveal'}" style="--r:${(w / h).toFixed(4)}">${media(P, f, a, first)}</figure>`;
-    }).join('');
-    return `\n    <div class="art-row" style="--a:${sum.toFixed(4)};--n:${row.length}">${figs}</div>`;
-  }).join('');
+/* Una pieza de la galería (la primera de la página recibe la portada en la transición desde Home/Work) */
+function figure(P, [f, w, h], alt, style = '', extraClass = '') {
+  if (!isVideo(f)) imgCounter.n += 1;
+  const first = !renderRows.coverDone;
+  renderRows.coverDone = true;
+  const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
+  return `<figure class="${first ? 'art-cover' : 'reveal'}${extraClass}" style="--r:${(w / h).toFixed(4)}${style}">${media(P, f, a, first)}</figure>`;
+}
+const rowHtml = (P, row, alt) => {
+  const sum = row.reduce((s, [, w, h]) => s + w / h, 0);
+  return `\n    <div class="art-row" style="--a:${sum.toFixed(4)};--n:${row.length}">${row.map((it) => figure(P, it, alt)).join('')}</div>`;
+};
+/* groups: filas fijas por proyecto (lista de nombres de archivo); el resto se coloca con packRows */
+function renderRows(P, items, alt, groups = []) {
+  let html = '', loose = [];
+  const done = new Set();
+  const flush = () => { if (loose.length) html += packRows(loose).map((r) => rowHtml(P, r, alt)).join(''); loose = []; };
+  for (const it of items) {
+    if (done.has(it[0])) continue;
+    const g = groups.find((names) => names.includes(it[0]));
+    if (!g) { loose.push(it); continue; }
+    flush();
+    const row = g.map((n) => items.find((x) => x[0] === n)).filter(Boolean);
+    row.forEach((x) => done.add(x[0]));
+    html += rowHtml(P, row, alt);
+  }
+  flush();
+  return html;
+}
+/* Tira panorámica más pequeña y con aire alrededor (fotogramas del vídeo) */
+const renderStrip = (P, it, alt) => `\n    <div class="art-strip">${figure(P, it, alt)}</div>`;
+/* Composición editorial: rejilla de 12 columnas, cada foto con su columna, ancho y desfase vertical */
+function renderEditorial(P, rows, alt) {
+  return rows.map((row) => `\n    <div class="ed-row">${row.map(([f, col, span, drop = 0]) => {
+    const [w, h] = dims(f);
+    return figure(P, [f, w, h], alt, `;--col:${col};--span:${span};--drop:${drop}vh`, ' ed-fig');
+  }).join('')}</div>`).join('');
 }
 
 const renderText = ([t, body]) => `
@@ -754,7 +827,7 @@ function buildArticle(key) {
   const p = PROJECTS[key];
   let body = '';
   const allImgs = p.blocks
-    ? p.blocks.filter((b) => typeof b !== 'string').flat(2)
+    ? p.blocks.flatMap((b) => (typeof b === 'string' ? [] : b.strip ? [b.strip] : b.ed ? b.ed.flat(1) : b.flat(1)))
     : p.gallery;
   imgCounter = { n: 0, total: allImgs.filter((m) => !isVideo(m[0])).length };
   renderRows.coverDone = false;
@@ -764,6 +837,8 @@ function buildArticle(key) {
     let ti = 0;
     for (const b of p.blocks) {
       if (typeof b === 'string') seq.push({ text: p.texts[ti++] });
+      else if (b.strip) seq.push({ strip: b.strip });
+      else if (b.ed) seq.push({ ed: b.ed });
       else seq.push({ items: b.flat(1) });
     }
   } else {
@@ -777,12 +852,15 @@ function buildArticle(key) {
   }
   // tramos de imágenes seguidos se empaquetan juntos
   for (let i = 0; i < seq.length; i++) {
-    if (seq[i].text) { body += renderText(seq[i].text); continue; }
-    let items = seq[i].items;
-    // el vídeo/portada inicial y una tira panorámica no se mezclan con las fotos
-    body += renderRows(P, items, p.name);
+    const s = seq[i];
+    if (s.text) body += renderText(s.text);
+    else if (s.strip) body += renderStrip(P, s.strip, p.name);
+    else if (s.ed) body += renderEditorial(P, s.ed, p.name);
+    else body += renderRows(P, s.items, p.name, p.rows || []);
   }
-  const more = MORE_ORDER.filter((k) => k !== key).slice(0, 2);
+  // More Projects: los dos siguientes en el orden de la Home (rota, y vuelve al principio al final)
+  const idx = HOME_ORDER.indexOf(key);
+  const more = [1, 2].map((d) => HOME_ORDER[(idx + d) % HOME_ORDER.length]);
 
   const html = `${head({ P, title: `${p.name} — Classs®`, description: p.desc })}
 <body id="top">${header(P, 'work')}
