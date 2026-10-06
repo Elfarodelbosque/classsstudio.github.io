@@ -69,14 +69,20 @@ button, input, textarea { font: inherit; color: inherit; }
   html.has-cursor, html.has-cursor * { cursor: none !important; }
 }
 .cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  width: 10px; height: 10px; margin: -5px 0 0 -5px;
-  border-radius: 50%; background: #fff;
+  position: fixed; top: 0; left: 0; z-index: 9999; width: 0; height: 0;
   pointer-events: none; mix-blend-mode: difference;
   transition: opacity .2s;
   opacity: 0; will-change: transform;
 }
 .cursor.is-visible { opacity: 1; }
+.cursor-dot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #fff; will-change: transform; }
+.cursor-label {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
+  font: 600 12px/1 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #000;
+  opacity: 0; transition: opacity 160ms var(--ease-out); white-space: nowrap;
+}
+.cursor.has-label { mix-blend-mode: normal; }
+.cursor.has-label .cursor-label { opacity: 1; transition-delay: 90ms; }
 
 /* ---------- Efecto "roll" en textos (hover) ---------- */
 .roll { display: inline-flex; flex-direction: column; overflow: hidden; height: var(--lh, 1.48em); vertical-align: top; }
@@ -194,9 +200,10 @@ a, button, [role="button"] { touch-action: manipulation; }
 .hero-card video { width: 100%; height: 100%; object-fit: cover; }
 .hero .skills-bar { margin-top: -104px; }
 
-.hero-name { margin: 104px var(--pad) 0; overflow: hidden; }
+.hero-name { margin: 104px var(--pad) 0; }
 .hero-name { position: relative; }
-.hero-name .mask { display: block; overflow: hidden; }
+.hero-name .mask { display: block; }
+html.is-intro .hero-name .mask { overflow: hidden; }
 .hero-name .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.054em; }
 .hero-name .mask + .mask .fit { font-weight: 400; line-height: 1; letter-spacing: -0.0586em; }
 
@@ -220,7 +227,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 /* =========================================================
    LISTA DE PROYECTOS (Home + More Projects)
    ========================================================= */
-.projects-sec { padding-top: 150px; }
+.projects-sec { padding-top: 104px; }
 .projects { padding: 48px var(--pad) 0; display: grid; gap: 40px; }
 .project {
   display: grid; grid-template-columns: 688fr 689fr; column-gap: 24px; height: 600px;
@@ -333,9 +340,22 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   display: inline-flex; align-items: flex-start; gap: 12px; margin-top: 32px;
   font-size: 40px; font-weight: 500; line-height: 48px; --lh: 48px; letter-spacing: -1px;
 }
-.hire-mail .arrow { font-size: 30px; line-height: 40px; color: var(--red); transition: transform 280ms var(--ease-out); }
+.hire-mail .arrow { width: 26px; height: 26px; margin-top: 12px; flex: none; color: var(--red); transition: transform 280ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .hire-mail:hover .arrow { transform: translate(4px, -4px); }
+}
+.hire-mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: 32px; }
+.hire-mail-row .hire-mail { margin-top: 0; }
+.copy-mail {
+  border: 0; background: none; padding: 6px 0; min-height: 44px;
+  font-size: 17px; font-weight: 500; color: var(--grey-light); display: inline-flex; align-items: center; gap: 4px;
+  transition: color .2s, transform 160ms var(--ease-out);
+}
+.copy-mail .br { color: var(--red); }
+.copy-mail:active { transform: scale(0.97); }
+.copy-mail.is-done { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .copy-mail:hover { color: #fff; }
 }
 .contact-links { display: flex; flex-wrap: wrap; gap: 12px 40px; list-style: none; margin: 40px 0 0; padding: 0; }
 .contact-links a { font-size: 24px; font-weight: 500; line-height: 38px; --lh: 38px; display: inline-flex; align-items: center; gap: 6px; }
@@ -378,7 +398,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .feedback .note:empty { display: none; }
 @starting-style { .feedback .note { opacity: 0; transform: translateY(4px); } }
 .footer-text { width: 588px; max-width: calc(100% - 2 * var(--pad)); margin: 64px auto 30px; text-align: center; }
-.site-footer { overflow: hidden; margin-top: 260px; padding-bottom: 24px; }
+.site-footer { margin-top: 260px; padding-bottom: 24px; }
 .site-footer .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.047em; margin: 0 var(--pad); width: auto; }
 
 /* =========================================================
@@ -414,7 +434,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   display: flex; justify-content: space-between; align-items: flex-start;
   font-size: 16px; font-weight: 600; --lh: 24px;
 }
-.contact-mail .arrow { font-size: 18px; transition: transform .4s var(--ease); }
+.contact-mail .arrow { width: 16px; height: 16px; margin-top: 4px; flex: none; color: var(--red); transition: transform 280ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .contact-mail:hover .arrow { transform: translate(3px, -3px); }
 }
@@ -445,7 +465,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .art-block figure img, .art-block figure video { width: 100%; height: 100%; object-fit: cover; }
 .art-block.single { justify-content: center; }
 .art-block.single figure { width: 100%; flex: none; }
-.art-text { width: 1000px; max-width: 100%; margin: 105px auto 104px; }
+.art-text { width: 640px; max-width: 100%; margin: 105px auto 104px; }
 .art-text h2 { font-size: 17px; font-weight: 500; line-height: 25.2px; margin-bottom: 24px; }
 .art-text p { font-size: 17px; font-weight: 500; line-height: 24px; color: var(--grey); white-space: pre-line; }
 .art-text + .art-text { margin-top: -40px; }
@@ -510,7 +530,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .project-text .t-p { max-width: none; }
   .projects.js-focus .project, .projects.js-focus .project .project-media { opacity: 1; transform: none; }
 
-  .projects-sec { padding-top: 96px; }
+  .projects-sec { padding-top: 72px; }
   .gallery-sec, .skills-sec, .labbb-sec { padding-top: 96px; }
   .gallery3d { height: 1800px; }
 
@@ -535,7 +555,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .hire { padding-top: 40px; }
   .hire-title { font-size: 64px; line-height: 60px; letter-spacing: -2.5px; }
   .hire-mail { font-size: 20px; line-height: 28px; --lh: 28px; letter-spacing: -0.3px; }
-  .hire-mail .arrow { font-size: 20px; line-height: 28px; }
+  .hire-mail .arrow { width: 16px; height: 16px; margin-top: 7px; }
   .contact-links { gap: 8px 24px; margin-top: 28px; }
   .contact-links a { font-size: 20px; line-height: 32px; --lh: 32px; }
   .feedback { margin: 40px var(--pad) 48px; }
@@ -563,3 +583,33 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .art-text p, .art-text h2 { font-size: 15px; line-height: 22px; }
   .more-marquee { margin-top: 60px; }
 }
+
+/* =========================================================
+   TRANSICIÓN ENTRE PÁGINAS (View Transitions, mismo origen)
+   La portada pulsada en Home/Work se transforma en la portada del proyecto.
+   Navegadores sin soporte: navegación normal.
+   ========================================================= */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+.art-cover img { view-transition-name: cover; }
+::view-transition-group(cover) {
+  animation-duration: 640ms;
+  animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  overflow: clip; border-radius: var(--radius);
+}
+::view-transition-old(cover), ::view-transition-new(cover) {
+  height: 100%; width: 100%; object-fit: cover; animation-duration: 640ms;
+}
+::view-transition-old(root) { animation: vt-out 320ms var(--ease-out) both; }
+::view-transition-new(root) { animation: vt-in 520ms var(--ease-out) 120ms both; }
+::view-transition-group(site-header) { animation: none; }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(24px); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* =========================================================
+   OVERDRIVE 3 · el nombre se rompe al hacer scroll / "Classs" se recompone
+   ========================================================= */
+.scatter-ch { display: inline-block; will-change: transform; white-space: pre; }

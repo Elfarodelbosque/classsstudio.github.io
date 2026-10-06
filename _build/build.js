@@ -364,7 +364,9 @@ const src = (P, f) => (isVideo(f) ? `${P}assets/video/${f}` : `${P}assets/img/${
 const media = (P, f, alt = '', eager = false) =>
   isVideo(f)
     ? `<video src="${src(P, f)}" autoplay muted loop playsinline preload="metadata"></video>`
-    : `<img src="${src(P, f)}" alt="${esc(alt)}"${eager ? '' : ' loading="lazy"'} decoding="async">`;
+    : `<img src="${src(P, f)}" alt="${esc(alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+/* Flecha dibujada (en lugar del carácter ↗) */
+const arrowSvg = `<svg class="arrow" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"><path d="M4 12 12 4M5.5 4H12v6.5"/></svg>`;
 const roll = (t) => `<span class="roll"><span>${esc(t)}</span><span aria-hidden="true">${esc(t)}</span></span>`;
 const chars = (t) =>
   `<span class="chars" aria-label="${esc(t)}">${[...t].map((c, i) => {
@@ -398,13 +400,14 @@ function head({ P, title, description = SITE.description, extraCss = '', intro =
 }
 
 function header(P, current) {
-  const links = [['Home', `${P}`, 'home'], ['Work', `${P}work/`, 'work'], ['Labbb', `${P}labbb/`, 'labbb'], ['Contact', `${P}contact/`, 'contact']];
+  const home = P || './';
+  const links = [['Home', home, 'home'], ['Work', `${P}work/`, 'work'], ['Labbb', `${P}labbb/`, 'labbb'], ['Contact', `${P}contact/`, 'contact']];
   return `
   <header class="site-header">
     <nav class="site-nav" aria-label="Principal">
 ${links.map(([t, h, k]) => `      <a href="${h}"${k === current ? ' aria-current="page"' : ''}>${br(roll(t))}</a>`).join('\n')}
     </nav>
-    <a class="brand" href="${P}">${roll('Classs®')}</a>
+    <a class="brand" href="${home}">${roll('Classs®')}</a>
     <div class="site-meta"><p>Based in Madrid</p><p>Art Director</p></div>
   </header>`;
 }
@@ -458,7 +461,11 @@ function infoSection(P, { back = { label: '[ BACK TO TOP ]', href: '#top', top: 
     <div class="hire reveal">
       <h2 id="info-title" class="hire-title">¿Hablamos?</h2>
       <p class="hire-lead t-p">Busco proyectos de dirección de arte, branding y campaña. Cuéntame qué tienes entre manos.</p>
-      <a class="hire-mail" href="mailto:${SITE.email}">${roll(SITE.email)}<span class="arrow" aria-hidden="true">↗</span></a>${links}
+      <div class="hire-mail-row">
+        <a class="hire-mail" href="mailto:${SITE.email}">${roll(SITE.email)}${arrowSvg}</a>
+        <button class="copy-mail" type="button" data-copy="${SITE.email}">${br('<span class="copy-label">Copiar</span>')}</button>
+        <span class="copy-status sr-only" aria-live="polite"></span>
+      </div>${links}
     </div>` : `
     <h2 id="info-title" class="sr-only">Más enlaces y feedback</h2>
     <div class="hire hire--compact reveal">${links}
@@ -520,7 +527,7 @@ function buildHome() {
       </p>
       <div class="hero-card">${media(P, 'ckQ648nzLiEeoYNRrILsfWEjQJ4.mp4')}</div>
     </div>${marqueeBar(SKILL_NAMES)}
-    <h1 class="hero-name" id="hero-name"><span class="mask"><span class="fit">Claudia</span></span><span class="mask"><span class="fit">López-Asiaín</span></span><span class="sr-only">, Art Director en Madrid</span></h1>
+    <h1 class="hero-name" id="hero-name" aria-label="Claudia López-Asiaín, Art Director en Madrid"><span class="mask"><span class="fit" data-scatter>Claudia</span></span><span class="mask"><span class="fit" data-scatter>López-Asiaín</span></span></h1>
   </section>
 
   <section class="projects-sec" id="projects" aria-labelledby="projects-title">${bigTitle('Projects', HOME_ORDER.length, { size: 'xl', id: 'projects-title' })}
@@ -592,7 +599,7 @@ function buildContact() {
 <main>
   <section class="contact-top">
     <div class="contact-photo">${media(P, 'mKlZMm6gwNGm1eqPKER45Ocpu4.jpg', 'Claudia López-Asiaín', true)}</div>
-    <a class="contact-mail" href="mailto:${SITE.email}">${roll(SITE.email)}<span class="arrow" aria-hidden="true">↗</span></a>${staticBar()}
+    <a class="contact-mail" href="mailto:${SITE.email}">${roll(SITE.email)}${arrowSvg}</a>${staticBar()}
   </section>
   <h1 class="contact-now"><a href="mailto:${SITE.email}"><span class="fit"><span class="br">[</span> Contact Now <span class="br">]</span></span></a></h1>
 </main>
@@ -715,7 +722,8 @@ function renderBlock(P, b, alt) {
   const fig = ([f, w, h]) => {
     imgCounter.n += 1;
     const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
-    return `<figure class="reveal" style="aspect-ratio:${w}/${h}${b.single && b.single < 1300 ? `;width:${((b.single / 1377) * 100).toFixed(2)}%` : ''}">${media(P, f, a)}</figure>`;
+    const first = imgCounter.n === 1;   // la primera imagen recibe la portada en la transición desde Home/Work
+    return `<figure class="${first ? 'art-cover' : 'reveal'}" style="aspect-ratio:${w}/${h}${b.single && b.single < 1300 ? `;width:${((b.single / 1377) * 100).toFixed(2)}%` : ''}">${media(P, f, a, first)}</figure>`;
   };
   if (b.cols.length === 1 && b.cols[0].length === 1) {
     return `\n    <div class="art-block single">${fig(b.cols[0][0], 0)}</div>`;
@@ -787,8 +795,21 @@ function build404() {
   const html = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 — Classs®</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#000;color:#fff;font:600 18px/1.4 system-ui,sans-serif;text-align:center}a{color:#fff}b{color:red}</style>
-</head><body><div><p style="font-size:80px;margin:0">4<b>0</b>4</p><p>Esta página no existe. <a href="javascript:history.back()">Volver</a></p></div></body></html>
+<meta name="theme-color" content="#000000">
+<style>
+body{margin:0;min-height:100vh;min-height:100svh;display:grid;place-items:center;background:#000;color:#fff;font:600 18px/1.45 "Inter Display","Inter",system-ui,sans-serif;text-align:center;padding:24px}
+h1{font-size:clamp(96px,26vw,320px);line-height:.9;letter-spacing:-.05em;margin:0}
+h1 span{display:inline-block;color:#ff0000;transform:rotate(-14deg) translateY(.06em)}
+p{margin:18px auto 0;max-width:420px;color:#bbb}
+a{color:#fff;text-decoration:none}
+a b{color:#ff0000;font-weight:500}
+a:focus-visible{outline:2px solid #ff0000;outline-offset:4px}
+</style>
+</head><body><main>
+<h1 aria-label="404">4<span>0</span>4</h1>
+<p>Esta página se ha roto, y no del modo bueno.</p>
+<p><a href="javascript:history.back()"><b>[</b> Volver atrás <b>]</b></a></p>
+</main></body></html>
 `;
   write('404.html', html);
 }

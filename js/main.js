@@ -75,20 +75,32 @@
   if (finePointer) {
     const cursor = document.createElement('div');
     cursor.className = 'cursor';
+    cursor.innerHTML = '<span class="cursor-dot"></span><span class="cursor-label"></span>';
     document.body.appendChild(cursor);
+    const dot = cursor.firstChild, label = cursor.lastChild;
     document.documentElement.classList.add('has-cursor');
+    // Sobre un proyecto el cursor dice qué va a pasar ("Ver", "Abrir"); sobre enlaces solo crece
+    const labelFor = (t) => {
+      if (t.closest('.project, .work-card')) return 'Ver';
+      if (t.closest('.labbb-laptop')) return 'Abrir';
+      return '';
+    };
     // posición y tamaño se animan solo con transform; el bucle se para cuando el cursor está quieto
     let x = -100, y = -100, cx = x, cy = y, s = 1, ts = 1, running = false;
     const loop = () => {
       cx += (x - cx) * 0.35; cy += (y - cy) * 0.35; s += (ts - s) * 0.25;
-      cursor.style.transform = `translate(${cx}px, ${cy}px) scale(${s})`;
+      cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+      dot.style.transform = `scale(${s})`;
       if (Math.abs(x - cx) < 0.1 && Math.abs(y - cy) < 0.1 && Math.abs(ts - s) < 0.01) { running = false; return; }
       requestAnimationFrame(loop);
     };
     addEventListener('mousemove', (e) => {
       x = e.clientX; y = e.clientY;
       const t = e.target.closest ? e.target : document.body;
-      ts = t.closest('a, button, summary, [data-cursor]') ? 3.6 : 1;
+      const text = labelFor(t);
+      ts = text ? 7.2 : t.closest('a, button, summary, [data-cursor]') ? 3.6 : 1;
+      if (label.textContent !== text) label.textContent = text;
+      cursor.classList.toggle('has-label', !!text);
       cursor.classList.toggle('is-hidden', !!t.closest('textarea, input'));   // al escribir se ve el cursor de texto normal
       cursor.classList.add('is-visible');
       if (!running) { running = true; requestAnimationFrame(loop); }
@@ -234,6 +246,114 @@
       note.textContent = `¡Gracias! Si no se ha abierto tu correo, copia el texto y envíalo a ${to}.`;
     });
   });
+
+  /* ---------- Copiar el email (por si el correo no se abre) ---------- */
+  $$('.copy-mail').forEach((btn) => {
+    const lbl = $('.copy-label', btn);
+    const status = btn.parentElement.querySelector('.copy-status');
+    let timer;
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy;
+      try { await navigator.clipboard.writeText(text); }
+      catch (e) {
+        const ta = Object.assign(document.createElement('textarea'), { value: text });
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e2) {}
+        ta.remove();
+      }
+      lbl.textContent = 'Copiado. Te leo';
+      btn.classList.add('is-done');
+      if (status) status.textContent = 'Email copiado al portapapeles';
+      clearTimeout(timer);
+      timer = setTimeout(() => { lbl.textContent = 'Copiar'; btn.classList.remove('is-done'); if (status) status.textContent = ''; }, 2400);
+    });
+  });
+
+  /* ---------- Transición de cine entre páginas (View Transitions) ----------
+     Al pulsar un proyecto, su portada recibe el nombre "cover"; en la página del proyecto
+     la primera imagen se llama igual, así que el navegador la transforma de una a otra. */
+  if ('onpagereveal' in window) {
+    const coverOf = (link) => link && link.querySelector('.project-media img, .media > img');
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a.project, a.work-card');
+      if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      $$('[style*="view-transition-name"]').forEach((el) => { el.style.viewTransitionName = ''; });
+      const img = coverOf(link);
+      if (img) img.style.viewTransitionName = 'cover';
+    });
+    // Al volver atrás desde un proyecto, su portada regresa a la tarjeta
+    addEventListener('pagereveal', async (e) => {
+      if (!e.viewTransition || !window.navigation || !navigation.activation || !navigation.activation.from) return;
+      const m = (navigation.activation.from.url || '').match(/\/article\/([^/]+)\//);
+      if (!m) return;
+      const link = $(`a.project[href$="article/${m[1]}/"], a.work-card[href$="article/${m[1]}/"]`);
+      const img = coverOf(link);
+      if (!img || $('.art-cover img')) return;
+      img.style.viewTransitionName = 'cover';
+      try { await e.viewTransition.finished; } catch (err) {}
+      img.style.viewTransitionName = '';
+    });
+    // Al volver con el botón atrás, la página queda en caché: limpiar el nombre
+    addEventListener('pageshow', () => $$('.project-media img, .media > img').forEach((el) => { el.style.viewTransitionName = ''; }));
+  }
+
+  /* ---------- El nombre se rompe al bajar / "Classs" se recompone al final ----------
+     Cada letra tiene un rumbo fijo (pseudoaleatorio, igual en cada visita). */
+  if (!reduceMotion) {
+    const rand = (i, k) => { const v = Math.sin((i + 1) * 12.9898 + k * 78.233) * 43758.5453; return v - Math.floor(v); };
+    const split = (el, offset) => {
+      const chars = [...el.textContent];
+      el.textContent = '';
+      return chars.map((ch, i) => {
+        const s = document.createElement('span');
+        s.className = 'scatter-ch';
+        s.setAttribute('aria-hidden', 'true');
+        s.textContent = ch;
+        el.appendChild(s);
+        const n = i + offset;
+        return { s, dx: (rand(n, 1) - 0.5) * 1.4, dy: -(0.25 + rand(n, 2) * 1.1), r: (rand(n, 3) - 0.5) * 70, o: 0.25 + rand(n, 4) * 0.5 };
+      });
+    };
+    const groups = [];
+    // Nombre del hero: se dispersa conforme sale de la pantalla
+    const nameEls = $$('.hero-name .fit[data-scatter]');
+    if (nameEls.length) {
+      let off = 0;
+      const letters = nameEls.flatMap((el) => { const r = split(el, off); off += r.length; return r; });
+      groups.push({ box: $('.hero-name'), letters, mode: 'out' });
+    }
+    // "Classs" del pie: llega roto y se recompone al llegar al final
+    const footFit = $('.site-footer .fit');
+    if (footFit) groups.push({ box: $('.site-footer'), letters: split(footFit, 40), mode: 'in' });
+    fitText();   // las letras sueltas pueden cambiar el ancho medido
+
+    let ticking = false;
+    const draw = () => {
+      ticking = false;
+      if (document.documentElement.classList.contains('is-intro')) return;
+      const vh = innerHeight;
+      groups.forEach((g) => {
+        const r = g.box.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) return;
+        const fs = parseFloat(getComputedStyle(g.letters[0].s).fontSize) || 100;
+        // out: 0 cuando el nombre está en su sitio → 1 cuando ha subido una pantalla
+        // in:  1 cuando el pie empieza a asomar → 0 cuando su base toca el borde inferior
+        const p = g.mode === 'out'
+          ? Math.min(1, Math.max(0, (vh * 0.85 - r.bottom) / (vh * 0.85)))
+          : Math.min(1, Math.max(0, (r.bottom - vh) / Math.max(1, r.height + vh * 0.25)));
+        const e = p * p * (3 - 2 * p);   // suavizado
+        g.letters.forEach((l) => {
+          l.s.style.transform = e ? `translate(${l.dx * fs * e}px, ${l.dy * fs * e}px) rotate(${l.r * e}deg)` : '';
+          l.s.style.opacity = e ? String(1 - (1 - l.o) * e) : '';
+        });
+      });
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } }, { passive: true });
+    addEventListener('resize', draw);
+    introDone.then(draw);
+    draw();
+  }
 
   /* ---------- Back to top suave ---------- */
   $$('[data-top]').forEach((a) => a.addEventListener('click', (e) => {
