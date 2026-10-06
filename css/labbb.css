@@ -176,3 +176,23 @@ html:has(body.labbb-page), .labbb-page { overscroll-behavior: none; }
   @starting-style { .win { transform: none; } }
   .dock-item img, .d-icon .thumb { transition: none; }
 }
+
+/* ---------- Semáforo de las ventanas ---------- */
+/* verde: pantalla completa · amarillo: más pequeña · rojo: cerrar */
+.win.is-resizing { transition: left 320ms var(--ease-out), top 320ms var(--ease-out), width 320ms var(--ease-out), height 320ms var(--ease-out), border-radius 320ms var(--ease-out); }
+.win.is-max {
+  left: 0 !important; top: 0 !important; width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+  max-width: none; max-height: none; border-radius: 0; z-index: 400 !important;
+}
+.win.is-max .win-bar { cursor: default; }
+.win-bar .dot { position: relative; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) {
+  /* al pasar por el semáforo aparecen los símbolos, como en macOS */
+  .win-bar:hover .dot::after { content: ""; position: absolute; inset: 3px; background: rgba(0, 0, 0, .55); }
+  .win-bar:hover .dot.r::after { clip-path: polygon(10% 0, 50% 40%, 90% 0, 100% 10%, 60% 50%, 100% 90%, 90% 100%, 50% 60%, 10% 100%, 0 90%, 40% 50%, 0 10%); }
+  .win-bar:hover .dot.y::after { clip-path: inset(42% 0 42% 0); }
+  .win-bar:hover .dot.g::after { clip-path: polygon(0 0, 70% 0, 0 70%, 0 0, 100% 30%, 100% 100%, 30% 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .win.is-resizing { transition: none; }
+}

@@ -253,6 +253,8 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   position: absolute; left: calc(32% + 107.5px); top: 208px; transform: translateX(-50%); white-space: nowrap; text-align: center;
   font-size: 49px; font-weight: 500; line-height: 50.6px; letter-spacing: -0.8px;
   transition: color .6s ease;
+  /* se invierte sobre la miniatura: blanco sobre oscuro, oscuro sobre claro, siempre legible */
+  mix-blend-mode: difference; pointer-events: none;
 }
 .project-text { position: absolute; left: 0; bottom: 0; width: 341px; max-width: 100%; }
 .project-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }

@@ -144,9 +144,41 @@
 
   function bindWindow(win) {
     win.addEventListener('pointerdown', () => focus(win));
+    // Semáforo como en macOS: rojo cierra, amarillo hace la ventana más pequeña, verde pantalla completa
+    const box = () => ({ left: win.offsetLeft, top: win.offsetTop, width: win.offsetWidth, height: win.offsetHeight });
+    const apply = (b) => { ['left', 'top', 'width', 'height'].forEach((k) => { win.style[k] = b[k] + 'px'; }); };
+    const animate = (fn) => {
+      win.classList.add('is-resizing');
+      fn();
+      setTimeout(() => win.classList.remove('is-resizing'), 340);
+    };
+    const toggleMax = () => animate(() => {
+      if (win.classList.contains('is-max')) {
+        win.classList.remove('is-max');
+        apply(win._before);
+      } else {
+        if (win.classList.contains('is-small')) { win.classList.remove('is-small'); apply(win._normal); }
+        win._before = box();
+        win.classList.add('is-max');
+        ['left', 'top', 'width', 'height'].forEach((k) => { win.style[k] = ''; });
+      }
+    });
+    const toggleSmall = () => animate(() => {
+      if (win.classList.contains('is-max')) { win.classList.remove('is-max'); apply(win._before); }
+      if (win.classList.contains('is-small')) { win.classList.remove('is-small'); apply(win._normal); return; }
+      const b = box();
+      win._normal = b;
+      win.classList.add('is-small');
+      const w = Math.round(b.width * 0.6), h = Math.round(b.height * 0.6);
+      apply({ left: b.left + (b.width - w) / 2, top: b.top + (b.height - h) / 2, width: w, height: h });
+    });
     win.querySelector('.dot.r').addEventListener('click', () => closeWindow(win));
-    win.querySelector('.dot.y').addEventListener('click', () => closeWindow(win));
-    win.querySelector('.dot.g').addEventListener('click', () => win.classList.toggle('is-max'));
+    win.querySelector('.dot.y').addEventListener('click', toggleSmall);
+    win.querySelector('.dot.g').addEventListener('click', toggleMax);
+    win.querySelector('.win-bar').addEventListener('dblclick', (e) => { if (!e.target.closest('.dot')) toggleMax(); });
+    win.querySelector('.dot.r').title = 'Cerrar';
+    win.querySelector('.dot.y').title = 'Hacer más pequeña';
+    win.querySelector('.dot.g').title = 'Pantalla completa';
 
     // notas
     win.querySelectorAll('.note-btn').forEach((btn) => btn.addEventListener('click', () => {
@@ -166,7 +198,7 @@
     });
 
     // arrastrar por la barra
-    drag(win.querySelector('.win-bar'), win, (e) => !e.target.closest('.dot'));
+    drag(win.querySelector('.win-bar'), win, (e) => !e.target.closest('.dot') && !win.classList.contains('is-max'));
   }
 
   /* ---------- Arrastrar (ventanas e iconos) ---------- */
