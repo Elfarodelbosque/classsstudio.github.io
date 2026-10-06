@@ -87,7 +87,9 @@
     };
     addEventListener('mousemove', (e) => {
       x = e.clientX; y = e.clientY;
-      ts = e.target.closest && e.target.closest('a, button, textarea, [data-cursor]') ? 3.6 : 1;
+      const t = e.target.closest ? e.target : document.body;
+      ts = t.closest('a, button, summary, [data-cursor]') ? 3.6 : 1;
+      cursor.classList.toggle('is-hidden', !!t.closest('textarea, input'));   // al escribir se ve el cursor de texto normal
       cursor.classList.add('is-visible');
       if (!running) { running = true; requestAnimationFrame(loop); }
     });
@@ -217,22 +219,17 @@
     addEventListener('resize', () => { size(); render(); });
   }
 
-  /* ---------- HOME · panel de skills: tocar también revela (móvil) ---------- */
-  $$('.skills-panel .cell').forEach((cell) => {
-    cell.addEventListener('click', () => cell.classList.toggle('is-on'));
-  });
-
   /* ---------- Formulario de feedback (abre el correo con el mensaje) ---------- */
   $$('.feedback form').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const txt = form.feedback.value.trim();
       const note = $('.note', form);
-      if (!txt) { note.textContent = 'Escribe algo antes de enviar.'; return; }
+      if (!txt) { note.textContent = 'Escribe tu comentario antes de enviarlo.'; form.feedback.focus(); return; }
       const to = form.dataset.mail;
       location.href = `mailto:${to}?subject=${encodeURIComponent('Feedback portfolio Classs®')}&body=${encodeURIComponent(txt)}`;
-      note.textContent = '¡Gracias! Se abrirá tu correo para enviarlo.';
-      form.reset();
+      // el texto se queda en el campo por si el correo no llega a abrirse
+      note.textContent = `¡Gracias! Si no se ha abierto tu correo, copia el texto y envíalo a ${to}.`;
     });
   });
 

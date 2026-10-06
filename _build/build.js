@@ -14,16 +14,24 @@ const ROOT = path.join(__dirname, '..');
    --------------------------------------------------------- */
 const SITE = {
   title: 'Classs® - Portafolio Creativo',
-  description: 'Art Director con base en Madrid. Prefiero lo que rompe a lo que encaja demasiado bien.',
+  description: 'Claudia López-Asiaín, Art Director en Madrid. Prefiero el ruido que rompe el molde a la perfección que nadie recuerda.',
   ogImage: 'assets/img/4qWC4fIKUA6T33nmytAD3ECmTJA.jpg',
   email: 'claudialopezasiain@gmail.com',
   linkedin: 'https://www.linkedin.com/in/claudial%C3%B3pezasia%C3%ADnseco/',
   cv: 'cv/claudia-lopez-asiain-cv-2026.pdf',
   cvAts: 'cv/claudia-lopez-asiain-cv-ats-2026.pdf',
-  bio: 'Desarrollo conceptos visuales que se traducen en imágenes claras, inesperadas y con personalidad.  Me interesa explorar la metáfora visual, el humor y la construcción de pequeños universos narrativos dentro de cada proyecto.',
-  skills: ['Art Direction', 'Branding', 'Strategy', 'Web Design'],
-  heroSkills: ['Art Direction', 'Brand Identity', 'Campaign Concepts', '3D & Visual Experimentation', 'Editorial & Digital Design'],
+  instagram: 'https://www.instagram.com/classs.studio',
+  behance: 'https://www.behance.net/claudialopezasiain',
+  bio: 'Desarrollo conceptos visuales que se traducen en imágenes claras, inesperadas y con personalidad. Me interesa explorar la metáfora visual, el humor y la construcción de pequeños universos narrativos dentro de cada proyecto.',
+  /* Una sola lista de skills para toda la web (cinta del hero, barra blanca y sección Skills) */
+  skills: [
+    ['Art Direction', 'Desarrollo conceptos que se convierten en imágenes claras y memorables, capaces de sostener campañas con identidad propia.', 'UclO2g8HzMRZ5To6PyLtKb5mW08.jpg'],
+    ['Brand Identity', 'Construyo universos visuales coherentes que permiten a las marcas expresarse con carácter y una personalidad reconocible.', 'upxEAQRVGPb97tPwPkPW6WWrOY.jpg'],
+    ['3D & Visual Experimentation', 'Exploro el potencial del 3D para ampliar el lenguaje visual y generar imágenes inesperadas con un enfoque experimental.', '0rygrdzoEgWVM0tmsbT09wmc5E.gif'],
+    ['Editorial Design', 'Diseño narrativas visuales donde imagen, tipografía y ritmo editorial trabajan juntos para construir significado.', 'B0XjSEzlwpcsuNHPs3fk1LFlxZg.jpeg'],
+  ],
 };
+const SKILL_NAMES = SITE.skills.map(([n]) => n);
 
 /* ---------------------------------------------------------
    PROYECTOS
@@ -341,9 +349,9 @@ Todo comparte la misma gramática visual: madera, alfombra de color y el sello t
   },
 };
 
-/* Orden de aparición */
+/* Orden de aparición (el mismo en Home y Work) */
 const HOME_ORDER = ['alhaja', 'comodecorarunacrisis', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein', 'aquiestamos'];
-const WORK_ORDER = ['comodecorarunacrisis', 'alhaja', 'etniabarcelona', 'sientatanbien', 'ecoalf', 'harste', 'dieselxklein', 'aquiestamos'];
+const WORK_ORDER = HOME_ORDER;
 /* "More Projects" en cada proyecto: los 2 primeros de esta lista que no sean el actual */
 const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecorarunacrisis'];
 
@@ -401,19 +409,17 @@ ${links.map(([t, h, k]) => `      <a href="${h}"${k === current ? ' aria-current
   </header>`;
 }
 
-const secHead = (label) => `
-    <div class="sec-head reveal"><h6>${esc(label)}</h6><h6>[ PRTFL® — 26 ]</h6><h6>CLASSS</h6></div>`;
-
-const bigTitle = (t, count) => `
-    <div class="big-title reveal"><h1>${esc(t)}</h1><span class="count"><span class="br">[</span>${esc(count)}<span class="br">]</span></span></div>`;
+/* Título de sección con contador rojo:  Projects [8].  size: 'xl' (solo Projects) o 'md' (secundarias) */
+const bigTitle = (t, count, { size = 'md', tag = 'h2', id = '' } = {}) => `
+    <div class="big-title big-title--${size} reveal"><${tag}${id ? ` id="${id}"` : ''}>${esc(t)}</${tag}><span class="count" aria-label="${esc(String(count))}"><span class="br" aria-hidden="true">[</span>${esc(count)}<span class="br" aria-hidden="true">]</span></span></div>`;
 
 const staticBar = () => `
-    <div class="skills-bar skills-bar--static">${SITE.skills.map((s) => `<p>${esc(s)}</p>`).join('')}</div>`;
+    <div class="skills-bar skills-bar--static" aria-hidden="true">${SKILL_NAMES.map((s) => `<p>${esc(s)}</p>`).join('')}</div>`;
 
 function marqueeBar(items) {
   const row = items.map((s) => `<p>${esc(s)}</p>`).join('');
   return `
-    <div class="skills-bar skills-bar--marquee" aria-label="${esc(items.join(', '))}"><div class="track">${row}${row.replace(/<p>/g, '<p aria-hidden="true">')}</div></div>`;
+    <div class="skills-bar skills-bar--marquee" aria-hidden="true"><div class="track">${row}${row}</div></div>`;
 }
 
 function projectRow(P, key, { useWork = false } = {}) {
@@ -421,40 +427,53 @@ function projectRow(P, key, { useWork = false } = {}) {
   const [big, small] = useWork ? p.work : p.home;
   return `
       <a class="project" href="${P}article/${key}/">
-        <div class="project-media">${media(P, big, p.alt || p.name)}</div>
+        <div class="project-media">${media(P, big, p.alt || `${p.name}, portada del proyecto`)}</div>
         <div class="project-info">
           <div class="project-thumb">${media(P, small, '')}</div>
           <h3 class="project-title">${esc(p.name)}</h3>
           <div class="project-text">
-            <p class="t-p">${esc(useWork ? p.name : p.homeSub)}</p>
+            <p class="project-meta"><span class="project-name">${esc(p.name)}</span><span class="project-cat">${esc(p.category)}</span></p>
+            <p class="t-p">${esc(p.homeSub)}</p>
             <p class="t-body">${esc(p.desc)}</p>
           </div>
         </div>
       </a>`;
 }
 
-function infoSection(P, back = { label: '[ BACK TO TOP ]', href: '#top', top: true }) {
+/* Cierre de todas las páginas: contacto primero, feedback como opción secundaria */
+function infoSection(P, { back = { label: '[ BACK TO TOP ]', href: '#top', top: true }, contact = true } = {}) {
+  const links = `
+    <ul class="contact-links">
+      <li><a href="${SITE.linkedin}" target="_blank" rel="noopener">${br(roll('LinkedIn'))}</a></li>
+      <li><a href="${P}${SITE.cv}" target="_blank" rel="noopener">${br(roll('Currículum'))}<small>PDF</small></a></li>
+      <li><a href="${SITE.instagram}" target="_blank" rel="noopener">${br(roll('Instagram'))}</a></li>
+      <li><a href="${SITE.behance}" target="_blank" rel="noopener">${br(roll('Behance'))}</a></li>
+    </ul>`;
   return `
-  <section class="info-sec" id="info">${secHead('© INFO SECTION')}
-    <div class="feedback reveal">
+  <section class="info-sec" id="info" aria-labelledby="info-title">${contact ? `
+    <div class="hire reveal">
+      <h2 id="info-title" class="hire-title">¿Hablamos?</h2>
+      <p class="hire-lead t-p">Busco proyectos de dirección de arte, branding y campaña. Cuéntame qué tienes entre manos.</p>
+      <a class="hire-mail" href="mailto:${SITE.email}">${roll(SITE.email)}<span class="arrow" aria-hidden="true">↗</span></a>${links}
+    </div>` : `
+    <h2 id="info-title" class="sr-only">Más enlaces y feedback</h2>
+    <div class="hire hire--compact reveal">${links}
+    </div>`}
+    <details class="feedback reveal">
+      <summary>${br('¿Tienes feedback sobre el portfolio?')}</summary>
       <form data-mail="${SITE.email}" novalidate>
-        <h3>¿Quieres darme feedback?</h3>
-        <label>Tu feedback
-          <textarea name="feedback" placeholder="Escribe aquí tu opinión, idea o sugerencia…"></textarea>
+        <label>Tu comentario
+          <textarea name="feedback" rows="5" placeholder="Escribe aquí tu opinión, idea o sugerencia…"></textarea>
         </label>
-        <button type="submit">${br('Enviar feedback')}</button>
+        <button type="submit">Abrir mi correo para enviarlo</button>
         <p class="note" aria-live="polite"></p>
       </form>
-    </div>
-    <div class="socials">
-      <a href="${SITE.linkedin}" target="_blank" rel="noopener">${br(roll('LinkedIn'))}</a>
-      <a href="${P}${SITE.cv}" target="_blank" rel="noopener">${br(roll('Currículum'))}</a>
-    </div>${staticBar()}
+    </details>${staticBar()}
     <p class="footer-text t-body reveal">${esc(SITE.bio)}</p>
-    <div class="center"><a class="pill" href="${back.href}"${back.top ? ' data-top' : ''}>${chars(back.label)}</a></div>
+    <div class="center"><a class="pill" href="${back.href}"${back.top ? ' data-top' : ''} aria-label="${esc(back.label.replace(/[\[\]]/g, '').trim())}">${chars(back.label)}</a></div>
   </section>
-  <footer class="site-footer" aria-label="Classs">
-    <span class="fit">Classs</span>
+  <footer class="site-footer">
+    <span class="fit" aria-hidden="true">Classs</span>
   </footer>`;
 }
 
@@ -481,38 +500,32 @@ function buildHome() {
     ['vZOli9AdjrBid9PKHCo7owklg8.mp4', 118 / 270], ['YlPEc4VGelljC587vhHzRozjN8k.mp4', 218 / 213],
     ['iQWiRMygtaSXR8mlo1y7egqQFM.mp4', 235 / 158],
   ];
-  const skills = [
-    ['Art Direction', 'Desarrollo conceptos que se convierten en imágenes claras y memorables, capaces de sostener campañas con identidad propia.'],
-    ['Brand Identity', 'Construyo universos visuales coherentes que permiten a las marcas expresarse con carácter y una personalidad reconocible.'],
-    ['3D & Visual Experimentation', 'Exploro el potencial del 3D para ampliar el lenguaje visual y generar imágenes inesperadas con un enfoque experimental.'],
-    ['Editorial Design', 'Diseño narrativas visuales de imagen, tipografía y ritmo editorial trabajan juntos para construir significado.'],
-  ];
-  const cells = ['UclO2g8HzMRZ5To6PyLtKb5mW08.jpg', 'B0XjSEzlwpcsuNHPs3fk1LFlxZg.jpeg', 'upxEAQRVGPb97tPwPkPW6WWrOY.jpg', '0rygrdzoEgWVM0tmsbT09wmc5E.gif',
-    '0rygrdzoEgWVM0tmsbT09wmc5E.gif', 'UclO2g8HzMRZ5To6PyLtKb5mW08.jpg', 'B0XjSEzlwpcsuNHPs3fk1LFlxZg.jpeg', 'upxEAQRVGPb97tPwPkPW6WWrOY.jpg'];
+  const quote = 'Prefiero el ruido que rompe el molde a la perfección que nadie recuerda.';
 
   const html = `${head({ P, title: SITE.title, intro: true })}
 <body id="top">
   <div class="intro" aria-hidden="true"><span class="intro-line"></span></div>${header(P, 'home')}
 
 <main>
-  <section class="hero">
+  <section class="hero" aria-labelledby="hero-name">
     <div class="hero-top">
-      <div class="hero-quote" aria-label="Prefiero el ruido que rompe el molde a la perfección que nadie recuerda.">
-        <h3 class="t-h3">Prefiero el ruido que</h3>
-        <h3 class="t-h3">rompe el molde a la</h3>
-        <h3 class="t-h3">perfección que nadie recuerda.</h3>
-      </div>
+      <p class="hero-quote"><span class="sr-only">${quote}</span>
+        <span class="t-h3" aria-hidden="true">Prefiero el ruido que</span>
+        <span class="t-h3" aria-hidden="true">rompe el molde a la</span>
+        <span class="t-h3" aria-hidden="true">perfección que nadie recuerda.</span>
+      </p>
       <div class="hero-card">${media(P, 'ckQ648nzLiEeoYNRrILsfWEjQJ4.mp4')}</div>
-    </div>${marqueeBar(SITE.heroSkills)}
-    <h1 class="hero-name"><span class="mask"><span class="fit">Claudia</span></span><span class="mask"><span class="fit">López-Asiaín</span></span></h1>
+    </div>${marqueeBar(SKILL_NAMES)}
+    <h1 class="hero-name" id="hero-name"><span class="mask"><span class="fit">Claudia</span></span><span class="mask"><span class="fit">López-Asiaín</span></span><span class="sr-only">, Art Director en Madrid</span></h1>
   </section>
 
-  <section class="projects-sec" id="projects">${secHead('© PROJECTS')}
+  <section class="projects-sec" id="projects" aria-labelledby="projects-title">${bigTitle('Projects', HOME_ORDER.length, { size: 'xl', id: 'projects-title' })}
     <div class="projects">${HOME_ORDER.map((k) => projectRow(P, k)).join('')}
     </div>
   </section>
 
-  <section class="gallery-sec" id="gallery">${secHead('© GALLERY')}${bigTitle('Gallery', gallery.length)}
+  <section class="gallery-sec" id="gallery" aria-labelledby="gallery-title">${bigTitle('Gallery', gallery.length, { id: 'gallery-title' })}
+    <p class="sec-lead t-p reveal">Pósters en movimiento. Más experimentos en el <a href="${P}labbb/">${br('Labbb')}</a>.</p>
     <div class="gallery3d">
       <div class="gallery3d-stage">
         <div class="gallery3d-world">
@@ -522,23 +535,22 @@ ${gallery.map(([f, r]) => `          <div class="g3d-card" data-ratio="${r.toFix
     </div>
   </section>
 
-  <section class="skills-sec" id="skills">${secHead('© SKILLS')}${bigTitle('Skills', skills.length)}${staticBar()}
-    <div class="skills-grid">
-      <div class="skills-list">
-${skills.map(([t, d], i) => `        <div class="skill reveal"><p class="t-body num">[0${i + 1}]</p><h4>${esc(t)}</h4><p class="t-body">${esc(d)}</p></div>`).join('\n')}
-      </div>
-      <div class="skills-panel" data-cursor>
-${cells.map((f) => `        <div class="cell">${media(P, f)}</div>`).join('\n')}
-      </div>
-    </div>
+  <section class="skills-sec" id="skills" aria-labelledby="skills-title">${bigTitle('Skills', SITE.skills.length, { id: 'skills-title' })}
+    <ul class="skills-list">
+${SITE.skills.map(([t, d, img]) => `      <li class="skill reveal">
+        <h3>${esc(t)}</h3>
+        <p class="t-body">${esc(d)}</p>
+        <div class="skill-img">${media(P, img, '')}</div>
+      </li>`).join('\n')}
+    </ul>
   </section>
 
-  <section class="labbb-sec" id="labbb">${secHead('© LABBB')}${bigTitle('Labbb', '<3')}
-    <div class="labbb-copy">
-      <h3 class="t-h3 l1 reveal">Descubre mi</h3>
-      <h3 class="t-h3 l2 reveal" style="--d:.1s">propio labb<span class="red">b</span>oratorio</h3>
-      <h3 class="t-h3 l3 reveal" style="--d:.2s">de ideas</h3>
-    </div>
+  <section class="labbb-sec" id="labbb" aria-labelledby="labbb-title">${bigTitle('Labbb', '<3', { id: 'labbb-title' })}
+    <p class="labbb-copy">
+      <span class="t-h3 l1 reveal">Descubre mi</span>
+      <span class="t-h3 l2 reveal" style="--d:.1s">propio labb<span class="red">b</span>oratorio</span>
+      <span class="t-h3 l3 reveal" style="--d:.2s">de ideas</span>
+    </p>
     <a class="labbb-laptop reveal" href="${P}labbb/" aria-label="Explorar Labbb">
       <img src="${P}assets/img/IH4uTxhWS1ptWbyj1IQiQsxW25k.png" alt="Experimentos personales con 3D, imagen generativa, motion y narrativas digitales." loading="lazy">
     </a>
@@ -588,9 +600,9 @@ function buildContact() {
     <div class="contact-photo">${media(P, 'mKlZMm6gwNGm1eqPKER45Ocpu4.jpg', 'Claudia López-Asiaín', true)}</div>
     <a class="contact-mail" href="mailto:${SITE.email}">${roll(SITE.email)}<span class="arrow" aria-hidden="true">↗</span></a>${staticBar()}
   </section>
-  <a class="contact-now" href="mailto:${SITE.email}"><span class="fit"><span class="br">[</span> Contact Now <span class="br">]</span></span></a>
+  <h1 class="contact-now"><a href="mailto:${SITE.email}"><span class="fit"><span class="br">[</span> Contact Now <span class="br">]</span></span></a></h1>
 </main>
-${infoSection(P)}
+${infoSection(P, { contact: false })}
 ${scripts(P)}`;
   write('contact/index.html', html);
 }
@@ -615,7 +627,8 @@ function buildLabbb() {
   const pct = (v, t) => ((v / t) * 100).toFixed(2) + '%';
   const html = `${head({ P, title: 'Labbb — Classs®', extraCss: `\n  <link rel="stylesheet" href="${P}css/labbb.css">` })}
 <body class="labbb-page">
-<main class="desktop" aria-label="Labbb, escritorio de proyectos personales">
+<main class="desktop">
+  <h1 class="sr-only">Labbb, escritorio de proyectos personales de Claudia López-Asiaín</h1>
   <img class="wallpaper" src="${P}assets/img/wsx33AqCaXV7H25mC3WEOCVyMNs.jpg" alt="">
   <a class="back-btn" href="${P}" aria-label="Volver a la Home">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg>
@@ -630,8 +643,7 @@ ${icons.map(([id, t, f, x, y, w, h]) => `  <div class="d-icon" data-open="${id}"
     <button class="dock-item" type="button" data-open="notes"><img src="${P}assets/img/4ar8CL6aUtjymV8jTsXrcPzXCM.svg" alt=""><span class="tip">Notes</span></button>
     <a class="dock-item" href="https://www.instagram.com/classs.studio" target="_blank" rel="noopener"><img src="${P}assets/img/Q0Z0p8LOZhN2hJ2arLjEtkqQD0.png" alt=""><span class="tip">Instagram</span></a>
     <a class="dock-item" href="https://www.behance.net/claudialopezasiain" target="_blank" rel="noopener"><img src="${P}assets/img/edJkRGfjqjPajyxmEgsUCKVgjE.png" alt=""><span class="tip">Behance</span></a>
-    <!-- TODO: pon aquí el enlace a tu perfil de X (en Framer estaba vacío) -->
-    <a class="dock-item" href="#" aria-disabled="true"><img src="${P}assets/img/vjmmhizcqEgw5ZT5SNFQMpxD00.png" alt=""><span class="tip">X</span></a>
+    <!-- Para añadir X: copia la línea de Behance y usa la imagen assets/img/vjmmhizcqEgw5ZT5SNFQMpxD00.png con tu enlace -->
   </nav>
 </main>
 
@@ -703,8 +715,14 @@ function groupGallery(items) {
   });
 }
 
+/* Texto alternativo propio para cada imagen: "Alhaja, imagen 3 de 8" */
+let imgCounter = { n: 0, total: 0 };
 function renderBlock(P, b, alt) {
-  const fig = ([f, w, h], i) => `<figure class="reveal" style="aspect-ratio:${w}/${h}${b.single && b.single < 1300 ? `;width:${((b.single / 1377) * 100).toFixed(2)}%` : ''}">${media(P, f, i === 0 ? alt : '')}</figure>`;
+  const fig = ([f, w, h]) => {
+    imgCounter.n += 1;
+    const a = isVideo(f) ? '' : `${alt}, imagen ${imgCounter.n} de ${imgCounter.total}`;
+    return `<figure class="reveal" style="aspect-ratio:${w}/${h}${b.single && b.single < 1300 ? `;width:${((b.single / 1377) * 100).toFixed(2)}%` : ''}">${media(P, f, a)}</figure>`;
+  };
   if (b.cols.length === 1 && b.cols[0].length === 1) {
     return `\n    <div class="art-block single">${fig(b.cols[0][0], 0)}</div>`;
   }
@@ -712,21 +730,25 @@ function renderBlock(P, b, alt) {
 }
 
 const renderText = ([t, body]) => `
-    <div class="art-text reveal"><h4>${esc(t)}</h4><p>${esc(body)}</p></div>`;
+    <div class="art-text reveal"><h2>${esc(t)}</h2><p>${esc(body)}</p></div>`;
 
 function buildArticle(key) {
   const P = '../../';
   const p = PROJECTS[key];
   let body = '';
+  const allImgs = p.blocks
+    ? p.blocks.filter((b) => typeof b !== 'string').flat(2)
+    : p.gallery;
+  imgCounter = { n: 0, total: allImgs.filter((m) => !isVideo(m[0])).length };
   if (p.blocks) {
     let ti = 0;
     for (const b of p.blocks) {
       if (typeof b === 'string') body += renderText(p.texts[ti++]);
-      else body += renderBlock(P, { cols: b }, p.alt || p.name);
+      else body += renderBlock(P, { cols: b }, p.name);
     }
   } else {
     const parts = [
-      ...groupGallery(p.gallery).map((b) => ({ y: b.top, html: renderBlock(P, b, p.alt || p.name) })),
+      ...groupGallery(p.gallery).map((b) => ({ y: b.top, html: renderBlock(P, b, p.name) })),
       ...p.texts.map((t) => ({ y: t[2], html: renderText(t) })),
     ].sort((a, b) => a.y - b.y);
     body = parts.map((x) => x.html).join('');
@@ -739,7 +761,7 @@ function buildArticle(key) {
 <main>
   <section class="art-head">
     <div class="reveal">
-      <h2>${esc(p.name)}</h2>
+      <h1>${esc(p.name)}</h1>
       <p class="t-body sub">${esc(p.sub)}</p>
       <p class="t-body desc">${esc(p.desc)}</p>
     </div>
@@ -751,13 +773,14 @@ ${Object.entries(p.meta).map(([k, v]) => `      <div><dt>${esc(k)}:</dt><dd>${es
   <section class="art-body">${body}
   </section>
 
-  <section class="more-sec">${secHead('© MORE PROJECTS')}
-    <div class="more-marquee" aria-label="More Projects"><div class="track">${'<h1 aria-hidden="true">More Projects</h1>'.repeat(4)}</div></div>
+  <section class="more-sec" aria-labelledby="more-title">
+    <h2 id="more-title" class="sr-only">Más proyectos</h2>
+    <div class="more-marquee" aria-hidden="true"><div class="track">${'<p>More Projects</p>'.repeat(4)}</div></div>
     <div class="projects">${more.map((k) => projectRow(P, k, { useWork: true })).join('')}
     </div>
   </section>
 </main>
-${infoSection(P, { label: 'BACK TO WORKS', href: `${P}work/` })}
+${infoSection(P, { back: { label: 'BACK TO WORKS', href: `${P}work/` } })}
 ${scripts(P)}`;
   write(`article/${key}/index.html`, html);
 }
