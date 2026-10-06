@@ -136,7 +136,7 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
 .big-title { position: relative; display: inline-block; margin: 0 var(--pad); }
 .big-title h1 { font-size: 208px; font-weight: 600; line-height: 168px; letter-spacing: -8px; }
 .big-title .count {
-  position: absolute; left: calc(100% + 20px); top: -60px;
+  position: absolute; left: calc(100% + 20px); top: -20px;
   font-size: 49px; font-weight: 500; line-height: 50.6px; letter-spacing: -0.8px; white-space: nowrap;
 }
 .big-title .count .br { color: var(--red); }
@@ -169,10 +169,27 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
 .hero .skills-bar { margin-top: -104px; }
 
 .hero-name { margin: 104px var(--pad) 0; overflow: hidden; }
-.hero-name .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.054em; transform-origin: 50% 100%; }
-.hero-name .fit + .fit { font-weight: 400; line-height: 1; letter-spacing: -0.0586em; }
-.hero-name .scale-in { transform: scale(.62); opacity: 0; transition: transform 1.4s var(--ease), opacity 1s ease; }
-.hero-name .scale-in.is-in { transform: none; opacity: 1; }
+.hero-name { position: relative; }
+.hero-name .mask { display: block; overflow: hidden; }
+.hero-name .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.054em; }
+.hero-name .mask + .mask .fit { font-weight: 400; line-height: 1; letter-spacing: -0.0586em; }
+
+/* ---------- Animación de entrada (solo Home) ---------- */
+.intro { display: none; }
+html.is-intro { overflow: hidden; }
+html.is-intro .intro {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 300;
+  background: #000; transition: opacity .9s ease;
+}
+.intro-line { width: 160px; height: 1px; background: rgba(255, 255, 255, .18); position: relative; overflow: hidden; transition: opacity .4s; }
+.intro-line::after { content: ""; position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: 0 50%; animation: introLine .9s var(--ease) .1s forwards; }
+@keyframes introLine { to { transform: scaleX(1); } }
+html.is-intro .hero-name { z-index: 301; overflow: visible; }
+html.is-intro .hero-name .fit { transform: translateY(105%); }
+.hero-name.is-shown .fit { transform: none !important; transition: transform 1s var(--ease); }
+.hero-name.is-shown .mask + .mask .fit { transition-delay: .12s; }
+html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
+.hero-top, .hero .skills-bar { transition: opacity 1s ease; }
 
 /* =========================================================
    LISTA DE PROYECTOS (Home + More Projects)
@@ -210,7 +227,7 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
    HOME — GALLERY 3D
    ========================================================= */
 .gallery-sec { padding-top: 37px; }
-.gallery-sec .big-title, .skills-sec .big-title, .labbb-sec .big-title { margin-top: 155px; }
+.gallery-sec .big-title, .skills-sec .big-title, .labbb-sec .big-title { margin-top: 130px; }
 .gallery3d { position: relative; height: 2300px; }
 .gallery3d-stage {
   position: sticky; top: 0; height: 100vh; overflow: hidden;
@@ -228,7 +245,7 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
    HOME — SKILLS
    ========================================================= */
 .skills-sec { padding-top: 0; }
-.skills-sec .skills-bar { margin-top: -14px; }
+.skills-sec .skills-bar { margin-top: 118px; }
 .skills-grid { display: grid; grid-template-columns: 688fr 713fr; margin-top: 60px; }
 .skills-list { padding: 0; }
 .skill {
@@ -304,7 +321,7 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
 .socials { display: flex; gap: 69px; padding: 26px 80px 52px; }
 .socials a { font-size: 24px; font-weight: 500; line-height: 38.3px; --lh: 38.3px; display: inline-flex; gap: 6px; }
 .footer-text { width: 588px; max-width: calc(100% - 2 * var(--pad)); margin: 74px auto 30px; text-align: center; }
-.site-footer { overflow: hidden; margin-top: 260px; }
+.site-footer { overflow: hidden; margin-top: 260px; padding-bottom: 24px; }
 .site-footer .fit { font-weight: 600; line-height: 0.9; letter-spacing: -0.047em; margin: 0 var(--pad); width: auto; }
 
 /* =========================================================
@@ -380,7 +397,8 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
    RESPONSIVE
    ========================================================= */
 @media (max-width: 1199px) {
-  .big-title .count { top: -40px; }
+  .big-title .count { top: -14px; }
+  .skills-sec .skills-bar { margin-top: 83px; }
   .t-h1, .big-title h1, .work-title h1, .more-marquee h1 { font-size: 150px; line-height: 124px; letter-spacing: -6px; }
   .hero-quote { width: 55%; }
   .hero-quote .t-h3, .project-title, .t-h3 { font-size: 38px; line-height: 40px; }
@@ -406,7 +424,8 @@ a:hover .chars > span, button:hover .chars > span { transform: translateY(-100%)
 
   .t-h1, .big-title h1, .work-title h1, .more-marquee h1 { font-size: 84px; line-height: 72px; letter-spacing: -3.5px; }
   .big-title .count, .work-title .count { font-size: 28px; line-height: 30px; }
-  .big-title .count { top: -18px; left: calc(100% + 8px); }
+  .big-title .count { top: -8px; left: calc(100% + 8px); }
+  .skills-sec .skills-bar { margin-top: 43px; }
   .t-h3, .hero-quote .t-h3, .project-title { font-size: 30px; line-height: 32px; letter-spacing: -0.5px; }
 
   .hero { padding-top: 96px; }

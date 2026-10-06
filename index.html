@@ -16,8 +16,10 @@
   <link rel="preload" href="assets/fonts/InterDisplay-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/InterDisplay-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-intro');</script>
 </head>
 <body id="top">
+  <div class="intro" aria-hidden="true"><span class="intro-line"></span></div>
   <header class="site-header">
     <nav class="site-nav" aria-label="Principal">
       <a href="" aria-current="page"><span class="br">[</span> <span class="roll"><span>Home</span><span aria-hidden="true">Home</span></span> <span class="br">]</span></a>
@@ -40,7 +42,7 @@
       <div class="hero-card"><video src="assets/video/ckQ648nzLiEeoYNRrILsfWEjQJ4.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
     </div>
     <div class="skills-bar skills-bar--marquee" aria-label="Art Direction, Brand Identity, Campaign Concepts, 3D &amp; Visual Experimentation, Editorial &amp; Digital Design"><div class="track"><p>Art Direction</p><p>Brand Identity</p><p>Campaign Concepts</p><p>3D &amp; Visual Experimentation</p><p>Editorial &amp; Digital Design</p><p aria-hidden="true">Art Direction</p><p aria-hidden="true">Brand Identity</p><p aria-hidden="true">Campaign Concepts</p><p aria-hidden="true">3D &amp; Visual Experimentation</p><p aria-hidden="true">Editorial &amp; Digital Design</p></div></div>
-    <h1 class="hero-name"><span class="fit scale-in">Claudia</span><span class="fit scale-in">López-Asiaín</span></h1>
+    <h1 class="hero-name"><span class="mask"><span class="fit">Claudia</span></span><span class="mask"><span class="fit">López-Asiaín</span></span></h1>
   </section>
 
   <section class="projects-sec" id="projects">
@@ -213,7 +215,7 @@
     <div class="center"><a class="pill" href="#top" data-top><span class="chars" aria-label="[ BACK TO TOP ]"><span aria-hidden="true" style="--i:0" data-c="[">[</span><span aria-hidden="true" style="--i:1" data-c=" "> </span><span aria-hidden="true" style="--i:2" data-c="B">B</span><span aria-hidden="true" style="--i:3" data-c="A">A</span><span aria-hidden="true" style="--i:4" data-c="C">C</span><span aria-hidden="true" style="--i:5" data-c="K">K</span><span aria-hidden="true" style="--i:6" data-c=" "> </span><span aria-hidden="true" style="--i:7" data-c="T">T</span><span aria-hidden="true" style="--i:8" data-c="O">O</span><span aria-hidden="true" style="--i:9" data-c=" "> </span><span aria-hidden="true" style="--i:10" data-c="T">T</span><span aria-hidden="true" style="--i:11" data-c="O">O</span><span aria-hidden="true" style="--i:12" data-c="P">P</span><span aria-hidden="true" style="--i:13" data-c=" "> </span><span aria-hidden="true" style="--i:14" data-c="]">]</span></span></a></div>
   </section>
   <footer class="site-footer" aria-label="Classs">
-    <span class="fit" data-clip="0.62">Classs</span>
+    <span class="fit">Classs</span>
   </footer>
 
   <script src="js/main.js" defer></script>

@@ -365,7 +365,7 @@ const chars = (t) =>
   }).join('')}</span>`;
 const br = (inner) => `<span class="br">[</span> ${inner} <span class="br">]</span>`;
 
-function head({ P, title, description = SITE.description, extraCss = '' }) {
+function head({ P, title, description = SITE.description, extraCss = '', intro = false }) {
   return `<!doctype html>
 <html lang="es">
 <head>
@@ -383,7 +383,8 @@ function head({ P, title, description = SITE.description, extraCss = '' }) {
   <link rel="apple-touch-icon" href="${P}apple-touch-icon.png">
   <link rel="preload" href="${P}assets/fonts/InterDisplay-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="${P}assets/fonts/InterDisplay-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="${P}css/style.css">${extraCss}
+  <link rel="stylesheet" href="${P}css/style.css">${extraCss}${intro ? `
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('is-intro');</script>` : ''}
 </head>`;
 }
 
@@ -452,7 +453,7 @@ function infoSection(P, back = { label: '[ BACK TO TOP ]', href: '#top', top: tr
     <div class="center"><a class="pill" href="${back.href}"${back.top ? ' data-top' : ''}>${chars(back.label)}</a></div>
   </section>
   <footer class="site-footer" aria-label="Classs">
-    <span class="fit" data-clip="0.62">Classs</span>
+    <span class="fit">Classs</span>
   </footer>`;
 }
 
@@ -488,8 +489,9 @@ function buildHome() {
   const cells = ['UclO2g8HzMRZ5To6PyLtKb5mW08.jpg', 'B0XjSEzlwpcsuNHPs3fk1LFlxZg.jpeg', 'upxEAQRVGPb97tPwPkPW6WWrOY.jpg', '0rygrdzoEgWVM0tmsbT09wmc5E.gif',
     '0rygrdzoEgWVM0tmsbT09wmc5E.gif', 'UclO2g8HzMRZ5To6PyLtKb5mW08.jpg', 'B0XjSEzlwpcsuNHPs3fk1LFlxZg.jpeg', 'upxEAQRVGPb97tPwPkPW6WWrOY.jpg'];
 
-  const html = `${head({ P, title: SITE.title })}
-<body id="top">${header(P, 'home')}
+  const html = `${head({ P, title: SITE.title, intro: true })}
+<body id="top">
+  <div class="intro" aria-hidden="true"><span class="intro-line"></span></div>${header(P, 'home')}
 
 <main>
   <section class="hero">
@@ -501,7 +503,7 @@ function buildHome() {
       </div>
       <div class="hero-card">${media(P, 'ckQ648nzLiEeoYNRrILsfWEjQJ4.mp4')}</div>
     </div>${marqueeBar(SITE.heroSkills)}
-    <h1 class="hero-name"><span class="fit scale-in">Claudia</span><span class="fit scale-in">López-Asiaín</span></h1>
+    <h1 class="hero-name"><span class="mask"><span class="fit">Claudia</span></span><span class="mask"><span class="fit">López-Asiaín</span></span></h1>
   </section>
 
   <section class="projects-sec" id="projects">${secHead('© PROJECTS')}
