@@ -230,7 +230,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .projects-sec { padding-top: 104px; }
 .projects { padding: 48px var(--pad) 0; display: grid; gap: 40px; }
 .project {
-  display: grid; grid-template-columns: 688fr 689fr; column-gap: 24px; height: 600px;
+  display: grid; grid-template-columns: 688fr 689fr; column-gap: 24px; min-height: 600px;
   transition: opacity .8s var(--ease);
 }
 .project-media { border-radius: var(--radius); overflow: hidden; transform-origin: 100% 50%; transition: transform .9s var(--ease); }
@@ -238,7 +238,8 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 @media (hover: hover) and (pointer: fine) {
   .project:hover .project-media img { transform: scale(1.04); }
 }
-.project-info { position: relative; }
+/* el texto empieza siempre a la misma altura (440 px) en todos los proyectos; si es largo, la fila crece */
+.project-info { position: relative; padding-top: 440px; }
 /* portada a su proporción real, centrada en su columna */
 .project--natural .project-media { width: auto; height: 100%; aspect-ratio: var(--ar); justify-self: center; transform-origin: 50% 50%; }
 /* miniatura entera: tamaño propio (--tw/--th), siempre centrada en el mismo punto que el título */
@@ -256,7 +257,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   /* se invierte sobre la miniatura: blanco sobre oscuro, oscuro sobre claro, siempre legible */
   mix-blend-mode: difference; pointer-events: none;
 }
-.project-text { position: absolute; left: 0; bottom: 0; width: 341px; max-width: 100%; }
+.project-text { position: relative; width: 341px; max-width: 100%; }
 .project-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
 .project-name { display: none; }
 .project-cat { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey-light); }
@@ -556,7 +557,8 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .hero-quote { width: 55%; }
   .hero-quote .t-h3, .project-title, .t-h3 { font-size: 38px; line-height: 40px; }
   .hero-card { width: 300px; height: 300px; }
-  .project { height: 480px; }
+  .project { min-height: 480px; }
+  .project-info { padding-top: 320px; }
   .project-thumb { left: calc(32% + 85px); top: calc(178px - var(--th, 226px) * .39); width: calc(var(--tw, 215px) * .78); height: calc(var(--th, 226px) * .78); }
   .project-title { top: 158px; left: calc(32% + 85px); }
   .project-text { width: 100%; }
@@ -588,7 +590,8 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .hero-name { margin-top: 40px; }
 
   .projects { gap: 56px; padding-top: 40px; }
-  .project { grid-template-columns: 1fr; height: auto; row-gap: 16px; }
+  .project { grid-template-columns: 1fr; min-height: 0; row-gap: 16px; }
+  .project-info { padding-top: 0; }
   .project-media { aspect-ratio: 688 / 600; }
   .project-info { position: static; display: grid; gap: 8px; }
   .project-thumb, .project-title { display: none; }

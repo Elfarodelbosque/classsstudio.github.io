@@ -325,19 +325,18 @@ Los copys actúan como comentarios irónicos en segunda persona, manteniendo el 
     ],
   },
 
-  /* Proyecto de cliente para El Faro del Bosque — material en assets/img/saladejuntas/ y assets/video/
-     TODO: los textos (subtítulo, descripción, Concepto…) son todavía los de "Aquí Estamos" */
+  /* Proyecto de cliente para El Faro del Bosque — material en assets/img/saladejuntas/ y assets/video/ */
   saladejuntas: {
     name: 'Sala de Juntas', category: 'Fashion Campaign',
     homeSub: 'El Faro del Bosque — OI26', sub: 'El Faro del Bosque — Otoño/Invierno 26',
-    desc: 'Campaña OI26 para El Faro del Bosque. Las fareras —las que cuidan la luz, las que vuelven cada temporada— vistiendo la colección en los interiores cálidos y las alfombras de color que definen la marca.',
+    desc: 'Campaña OT/IN 2026 para El Faro del Bosque, boutique multimarca en Madrid. Un guiño mid-century a Mad Men y Good Girls Revolt: mujeres que ocupan, con calma y con estilo, los despachos que nunca se pensaron para ellas.',
     home: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
     work: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
     web: { url: 'https://farodelbosque.es', label: 'farodelbosque.es' },
     meta: {
-      Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Visual Direction, Web Design',
-      Deliverables: 'Hero video, Lookbook, Catalog video, Social & WhatsApp content, Website',
-      Tools: 'Photoshop, Premiere', Date: 'Octubre 2026', Type: 'Client project',
+      Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Naming & Copy, AI Video Direction, Editing, Web Design',
+      Deliverables: 'Hero video (16:9 · 9:16), Instagram reel & stories, Lookbook, Catalog video, WhatsApp content, Website',
+      Tools: 'Photoshop, Premiere, Kling, Gemini, Adobe Firefly', Date: 'Octubre 2026', Type: 'Client project',
     },
     // orden: vídeo de portada → tira de fotogramas (más pequeña y con aire) → fotos en composición editorial
     blocks: [
@@ -359,19 +358,29 @@ Los copys actúan como comentarios irónicos en segunda persona, manteniendo el 
         [['saladejuntas/15.jpg', 3, 5], ['saladejuntas/16.jpg', 8, 4, 18]],
         [['saladejuntas/17.jpg', 10, 3]],
       ] },
+      'El vídeo',
+      { ed: [
+        [['sala-de-juntas-vertical.mp4', 5, 4]],   // versión vertical para Instagram
+      ] },
       'Sistema de campaña',
     ],
     texts: [
-      ['Concepto', `Aquí Estamos habla de volver. De las fareras que cada temporada regresan a encender la luz y, este año, la traen puesta.
-La colección OI26 se despliega como un reencuentro: maderas nobles, alfombras de color y las prendas de siempre contadas de otra manera.
+      ['Concepto', `La campaña parte de una idea sencilla: las mujeres que visten El Faro del Bosque no piden permiso, ya están dentro.
+El tono bebe del mid-century de Mad Men y de Good Girls Revolt, pero sin literalidad. No hay máquinas de escribir ni discursos: hay despachos de nogal, moquetas de color y mujeres que los habitan con naturalidad.
 
-No es una campaña sobre ropa nueva. Es una campaña sobre lo que permanece.`],
-      ['Dirección visual', `Cada escena ocurre dentro del faro: maderas cálidas, alfombras saturadas —azul, verde, burdeos— y una luz que entra siempre de lado, como de atardecer.
-Sobre ese fondo, la campaña se detiene en el detalle: un puño, un zapato, una textura. La prenda se lee de cerca antes que de cuerpo entero.
+Sala de Juntas juega con un doble sentido: el lugar donde se toman las decisiones y "juntas", la comunidad de clientas de la tienda, las fareras.
 
-La tipografía de campaña —"El Faro del Bosque presenta OT/IN"— se superpone a la escena como un cartel de cine, firmando cada pieza.`],
-      ['Sistema de campaña', `El lanzamiento se despliega en vídeo hero para la home, un lookbook fotográfico con las fichas de producto, un vídeo de catálogo para la tienda y contenido recortado para redes sociales y WhatsApp.
-Todo comparte la misma gramática visual: madera, alfombra de color y el sello tipográfico de "El Faro del Bosque presenta".`],
+El copy evita el imperativo y habla como un cartel de oficina: Se ruega llamar. Ocupada. Están reunidas. Se abre la sesión.`],
+      ['Dirección visual', `Nogal, latón, moqueta azul Klein y una luz cálida de tungsteno que entra siempre de lado. A menudo la cámara mira como desde una puerta entreabierta: los bordes desenfocados convierten al espectador en alguien que observa la reunión desde fuera.
+
+Sobre ese fondo, la paleta de campaña suma un verde pistacho, un rosa y un gris claro, y la tipografía Noka firma cada pieza con "El Faro del Bosque presenta OT/IN 2026", superpuesta a la imagen como el título de una película.`],
+      ['El vídeo', `Un cortometraje de 24 segundos en cuatro planos: una puerta cerrada tras la que se oye una reunión, un teléfono que suena —"El Faro del Bosque, ¿dígame?"—, una mujer que cruza el pasillo y llama, y dentro, otra que se gira al oírla.
+
+Los planos están generados con IA (Kling y Gemini) a partir de la estética de la sesión de fotos real; en el último, la fotografía de campaña se usa como primer fotograma para conservar a la modelo y el vestuario. En postproducción se igualaron color, nitidez y grano entre clips, se corrigieron errores de la IA fotograma a fotograma —como el dial del teléfono, que giraba solo— y se reescaló con Adobe Firefly.
+
+Hay dos versiones: horizontal para la web y vertical para Instagram, con los títulos dentro de las zonas seguras. En la web, donde el vídeo se reproduce sin sonido, la frase del teléfono aparece como un subtítulo amarillo de época.`],
+      ['Sistema de campaña', `El lanzamiento se despliega en un teaser de stories con copys de oficina, el vídeo hero de la web en horizontal y en vertical, el reel de Instagram, un lookbook fotográfico con las fichas de producto, un vídeo de catálogo para la tienda y mensajes para WhatsApp.
+Todo comparte la misma gramática: nogal, moqueta de color, grano de película y el sello tipográfico de OT/IN 2026.`],
     ],
   },
 };
@@ -388,9 +397,14 @@ const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecoraruna
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const isVideo = (f) => /\.mp4$/i.test(f);
 const src = (P, f) => (isVideo(f) ? `${P}assets/video/${f}` : `${P}assets/img/${f}`);
+/* Imagen de espera y descripción de cada vídeo (se ve mientras carga y la leen los lectores de pantalla) */
+const VIDEO_INFO = {
+  'sala-de-juntas.mp4': { poster: 'saladejuntas/video-poster.jpg', label: 'Vídeo de campaña Sala de Juntas, OT/IN 2026' },
+  'sala-de-juntas-vertical.mp4': { poster: 'saladejuntas/video-vertical-poster.jpg', label: 'Versión vertical del vídeo Sala de Juntas para Instagram' },
+};
 const media = (P, f, alt = '', eager = false) =>
   isVideo(f)
-    ? `<video src="${src(P, f)}" autoplay muted loop playsinline preload="metadata"></video>`
+    ? `<video src="${src(P, f)}"${VIDEO_INFO[f] ? ` poster="${P}assets/img/${VIDEO_INFO[f].poster}"` : ''} autoplay muted loop playsinline preload="metadata"${VIDEO_INFO[f] ? ` aria-label="${esc(VIDEO_INFO[f].label)}"` : ''}></video>`
     : `<img src="${src(P, f)}" alt="${esc(alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
 /* Ancho y alto reales de una imagen o vídeo de assets/ (jpg, png, gif, webp, mp4) */
 function dims(f) {
