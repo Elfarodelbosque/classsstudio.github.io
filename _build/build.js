@@ -333,6 +333,7 @@ Los copys actúan como comentarios irónicos en segunda persona, manteniendo el 
     home: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
     work: ['sala-de-juntas.mp4', 'saladejuntas/02.jpg'],
     web: { url: 'https://farodelbosque.es', label: 'farodelbosque.es' },
+    wideText: true,   // descripción larga: en la Home su caja de texto es más ancha para ocupar menos líneas
     meta: {
       Category: 'Fashion Campaign', Role: 'Art Direction, Campaign Concept, Naming & Copy, AI Video Direction, Editing, Web Design',
       Deliverables: 'Hero video (16:9 · 9:16), Instagram reel & stories, Lookbook, Catalog video, WhatsApp content, Website',
@@ -507,7 +508,7 @@ function projectRow(P, key, { useWork = false } = {}) {
   const ta = tw / th;
   const tW = Math.round(Math.min(320, 226 * ta)), tH = Math.round(tW / ta);
   return `
-      <a class="project${natural ? ' project--natural' : ''}" href="${P}article/${key}/"${natural ? ` style="--ar:${p.homeNatural.toFixed(4)}"` : ''}>
+      <a class="project${natural ? ' project--natural' : ''}${p.wideText ? ' project--wide-text' : ''}" href="${P}article/${key}/"${natural ? ` style="--ar:${p.homeNatural.toFixed(4)}"` : ''}>
         <div class="project-media">${media(P, big, p.alt || `${p.name}, portada del proyecto`)}</div>
         <div class="project-info">
           <div class="project-thumb" style="--tw:${tW}px;--th:${tH}px">${media(P, small, '')}</div>
