@@ -15,7 +15,8 @@ const ROOT = path.join(__dirname, '..');
 const SITE = {
   title: 'Classs® - Portafolio Creativo',
   description: 'Claudia López-Asiaín, Art Director en Madrid. Prefiero el ruido que rompe el molde a la perfección que nadie recuerda.',
-  ogImage: 'assets/img/4qWC4fIKUA6T33nmytAD3ECmTJA.jpg',
+  url: 'https://classsstudio.github.io/',
+  ogImage: 'assets/img/og-classs.jpg',   // imagen que se ve al compartir el enlace (1200×630, sacada de la foto del About)
   email: 'claudialopezasiain@gmail.com',
   linkedin: 'https://www.linkedin.com/in/claudial%C3%B3pezasia%C3%ADnseco/',
   cv: 'cv/claudia-lopez-asiain-cv-2026.pdf',
@@ -397,18 +398,37 @@ const MORE_ORDER = ['alhaja', 'etniabarcelona', 'sientatanbien', 'comodecoraruna
    --------------------------------------------------------- */
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const isVideo = (f) => /\.mp4$/i.test(f);
-const src = (P, f) => (isVideo(f) ? `${P}assets/video/${f}` : `${P}assets/img/${f}`);
+/* Versión ligera de cada archivo, si existe: los GIF se sirven como vídeo MP4 (assets/video/<nombre>.mp4)
+   y las JPG/PNG como WebP (assets/img/<nombre>.webp). Puedes seguir escribiendo el nombre original. */
+const OPT = {};
+function opt(f) {
+  if (f in OPT) return OPT[f];
+  const base = f.replace(/\.[a-z0-9]+$/i, '');
+  const size = (p) => (fs.existsSync(p) ? fs.statSync(p).size : Infinity);
+  let out = f;
+  if (/\.gif$/i.test(f)) {
+    const mp4 = path.join(ROOT, 'assets/video', path.basename(base) + '.mp4');
+    if (size(mp4) < size(path.join(ROOT, 'assets/img', f))) out = path.basename(base) + '.mp4';
+  } else if (/\.(jpe?g|png)$/i.test(f)) {
+    if (size(path.join(ROOT, 'assets/img', base + '.webp')) < size(path.join(ROOT, 'assets/img', f))) out = base + '.webp';
+  }
+  return (OPT[f] = out);
+}
+const src = (P, f) => (isVideo(opt(f)) ? `${P}assets/video/${opt(f)}` : `${P}assets/img/${opt(f)}`);
 /* Imagen de espera y descripción de cada vídeo (se ve mientras carga y la leen los lectores de pantalla) */
 const VIDEO_INFO = {
   'sala-de-juntas.mp4': { poster: 'saladejuntas/video-poster.jpg', label: 'Vídeo de campaña Sala de Juntas, OT/IN 2026' },
   'sala-de-juntas-vertical.mp4': { poster: 'saladejuntas/video-vertical-poster.jpg', label: 'Versión vertical del vídeo Sala de Juntas para Instagram' },
 };
-const media = (P, f, alt = '', eager = false) =>
-  isVideo(f)
-    ? `<video src="${src(P, f)}"${VIDEO_INFO[f] ? ` poster="${P}assets/img/${VIDEO_INFO[f].poster}"` : ''} autoplay muted loop playsinline preload="metadata"${VIDEO_INFO[f] ? ` aria-label="${esc(VIDEO_INFO[f].label)}"` : ''}></video>`
+const media = (P, f, alt = '', eager = false) => {
+  const info = VIDEO_INFO[f], label = info ? info.label : alt;
+  return isVideo(opt(f))
+    ? `<video src="${src(P, f)}"${info ? ` poster="${src(P, info.poster)}"` : ''} autoplay muted loop playsinline preload="${eager ? 'auto' : 'metadata'}"${label ? ` aria-label="${esc(label)}"` : ' aria-hidden="true"'}></video>`
     : `<img src="${src(P, f)}" alt="${esc(alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+};
 /* Ancho y alto reales de una imagen o vídeo de assets/ (jpg, png, gif, webp, mp4) */
 function dims(f) {
+  f = opt(f);
   const file = path.join(ROOT, isVideo(f) ? 'assets/video' : 'assets/img', f);
   const b = fs.readFileSync(file);
   if (isVideo(f)) {
@@ -456,10 +476,15 @@ function head({ P, title, description = SITE.description, extraCss = '', intro =
   <meta property="og:type" content="website">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
-  <meta property="og:image" content="${P}${SITE.ogImage}">
+  <meta property="og:url" content="${SITE.url}">
+  <meta property="og:image" content="${SITE.url}${SITE.ogImage}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Claudia López-Asiaín, Classs®">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="${P}favicon.svg" type="image/svg+xml">
+  <meta name="twitter:image" content="${SITE.url}${SITE.ogImage}">
   <link rel="icon" href="${P}favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="${P}favicon-16.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="${P}apple-touch-icon.png">
   <link rel="preload" href="${P}assets/fonts/InterDisplay-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="${P}assets/fonts/InterDisplay-600.woff2" as="font" type="font/woff2" crossorigin>
@@ -628,7 +653,7 @@ ${gallery.map(([f, r]) => `          <div class="g3d-card" data-ratio="${r.toFix
       <span class="t-h3 l3 reveal" style="--d:.2s">de ideas</span>
     </p>
     <a class="labbb-laptop reveal" href="${P}labbb/" aria-label="Explorar Labbb">
-      <img src="${P}assets/img/IH4uTxhWS1ptWbyj1IQiQsxW25k.png" alt="Experimentos personales con 3D, imagen generativa, motion y narrativas digitales." loading="lazy">
+      <img src="${src(P, 'IH4uTxhWS1ptWbyj1IQiQsxW25k.png')}" alt="Experimentos personales con 3D, imagen generativa, motion y narrativas digitales." loading="lazy">
     </a>
     <div class="center"><a class="pill" href="${P}labbb/">${chars('Explorar Labbb')}</a></div>
   </section>
@@ -760,7 +785,7 @@ function buildLabbb() {
 <body class="labbb-page">
 <main class="desktop">
   <h1 class="sr-only">Labbb, escritorio de proyectos personales de Claudia López-Asiaín</h1>
-  <img class="wallpaper" src="${P}assets/img/wsx33AqCaXV7H25mC3WEOCVyMNs.jpg" alt="">
+  <img class="wallpaper" src="${src(P, 'wsx33AqCaXV7H25mC3WEOCVyMNs.jpg')}" alt="">
   <a class="back-btn" href="${P}" aria-label="Volver a la Home">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 5 8l5 5"/></svg>
   </a>
@@ -770,10 +795,10 @@ ${icons.map(([id, t, f, x, y, w, h]) => `  <div class="d-icon" data-open="${id}"
   </div>`).join('\n')}
 
   <nav class="dock" aria-label="Dock">
-    <button class="dock-item" type="button" data-open="about"><img src="${P}assets/img/nw8sIMxm5caAZtuovUZPCLLg9U.png" alt=""><span class="tip">About Me</span></button>
+    <button class="dock-item" type="button" data-open="about"><img src="${src(P, 'nw8sIMxm5caAZtuovUZPCLLg9U.png')}" alt=""><span class="tip">About Me</span></button>
     <button class="dock-item" type="button" data-open="notes"><img src="${P}assets/img/4ar8CL6aUtjymV8jTsXrcPzXCM.svg" alt=""><span class="tip">Notes</span></button>
-    <a class="dock-item" href="https://www.instagram.com/classs.studio" target="_blank" rel="noopener"><img src="${P}assets/img/Q0Z0p8LOZhN2hJ2arLjEtkqQD0.png" alt=""><span class="tip">Instagram</span></a>
-    <a class="dock-item" href="https://www.behance.net/claudialopezasiain" target="_blank" rel="noopener"><img src="${P}assets/img/edJkRGfjqjPajyxmEgsUCKVgjE.png" alt=""><span class="tip">Behance</span></a>
+    <a class="dock-item" href="https://www.instagram.com/classs.studio" target="_blank" rel="noopener"><img src="${src(P, 'Q0Z0p8LOZhN2hJ2arLjEtkqQD0.png')}" alt=""><span class="tip">Instagram</span></a>
+    <a class="dock-item" href="https://www.behance.net/claudialopezasiain" target="_blank" rel="noopener"><img src="${src(P, 'edJkRGfjqjPajyxmEgsUCKVgjE.png')}" alt=""><span class="tip">Behance</span></a>
     <!-- Para añadir X: copia la línea de Behance y usa la imagen assets/img/vjmmhizcqEgw5ZT5SNFQMpxD00.png con tu enlace -->
   </nav>
 </main>
@@ -781,7 +806,7 @@ ${icons.map(([id, t, f, x, y, w, h]) => `  <div class="d-icon" data-open="${id}"
 <!-- Contenido de la ventana "About me" -->
 <template id="tpl-about" data-title="">
   <h2>About me</h2>
-  <div class="photo"><img src="${P}assets/img/hRqSDYyLHYkQzfb7CtJROAMWpno.png" alt="Mi historia"></div>
+  <div class="photo"><img src="${src(P, 'hRqSDYyLHYkQzfb7CtJROAMWpno.png')}" alt="Mi historia"></div>
   <div class="row"><b>NAME</b><span>Claudia López-Asiaín</span></div>
   <div class="row"><b>MAIL</b><a href="mailto:${SITE.email}">${SITE.email}</a></div>
   <div class="bio">

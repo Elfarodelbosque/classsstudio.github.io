@@ -12,47 +12,47 @@
     pantoneeee: {
       title: 'Pantoneeee', year: '2026', type: 'Artistic', next: 'oasis',
       desc: 'Una investigación sobre el color, los sentimientos que transmite y cómo coloreamos las emociones a través de él.',
-      media: ['3dDWEFGJKWyvOhS3Ca0ns1aMWNM.png'],
+      media: ['3dDWEFGJKWyvOhS3Ca0ns1aMWNM.webp'],
     },
     oasis: {
       title: 'oAsIs', year: '2026', type: 'Artistic', next: 'vda',
       desc: 'Una reinterpretación de la IA desde un enfoque más humanista',
-      media: ['KmKquT9Hdha4kruSK6f0RoJYaw.jpg', 'qn1FUj4sCXFBfwCkppX76hxf4BE.jpg', '3IiT9eni7qrafFTDnPBixwBYyU.jpg'],
+      media: ['KmKquT9Hdha4kruSK6f0RoJYaw.webp', 'qn1FUj4sCXFBfwCkppX76hxf4BE.webp', '3IiT9eni7qrafFTDnPBixwBYyU.webp'],
     },
     vda: {
       title: 'VDA', year: '2025', type: 'Visual Identity', next: 'libro',
       desc: 'Las gafas más coooooool del mercado. Si quieres comprarlas, dime',
-      media: ['eYE49OyOMk2SOZjoiRXCRJ8i4.gif', '66fH3XyUEcY0WyfkKRpIBrcmrw8.gif', '0Dkwn1wwSfTSV1V5YmqARfU60wY.webp'],
+      media: ['eYE49OyOMk2SOZjoiRXCRJ8i4.mp4', '66fH3XyUEcY0WyfkKRpIBrcmrw8.mp4', '0Dkwn1wwSfTSV1V5YmqARfU60wY.webp'],
     },
     libro: {
       title: 'Libro en portadas', year: '2025', type: 'Conceptual Visual', next: 'font', grid: true,
       desc: 'La portada perfecta para cada capítulo de tu etapa creativa. Hoy puedes ser más wéstern y mañana, más ciberpunk',
-      media: ['7wglq8m5Zm92UzRG5gcQnj8PTQ.png', 'wn7kJyAlQn55b3lwtApLYdgfFI.png', 'fqJ8QJuYhxqGtys7E40ZncABQ.png', 'bhkdbaDUQKNxg2l1ESMTqJI8t7w.png', 'YrkZznVIrBYrVrUGGDg07in2w0.png'],
+      media: ['7wglq8m5Zm92UzRG5gcQnj8PTQ.webp', 'wn7kJyAlQn55b3lwtApLYdgfFI.webp', 'fqJ8QJuYhxqGtys7E40ZncABQ.webp', 'bhkdbaDUQKNxg2l1ESMTqJI8t7w.webp', 'YrkZznVIrBYrVrUGGDg07in2w0.webp'],
     },
     font: {
       title: 'la mejor font del mundo', year: '2026', type: 'Lettering', next: 'placas',
       desc: 'Letra hecha a mano, al más puro estilo modernista. Chula, chulísima',
-      media: ['u3XnssA66Fnm4pGpZtOfVn9Ux9Y.jpg', 'dptbjiHNRVsJVYpi6D7jsii1vmg.jpg', 'XPw00WJ2gv4A62rWPySiZbjeUKY.jpg', 'cAt7ob3FplaBCsnVZmvlunRMuZw.jpg'],
+      media: ['u3XnssA66Fnm4pGpZtOfVn9Ux9Y.webp', 'dptbjiHNRVsJVYpi6D7jsii1vmg.webp', 'XPw00WJ2gv4A62rWPySiZbjeUKY.webp', 'cAt7ob3FplaBCsnVZmvlunRMuZw.webp'],
     },
     placas: {
       title: 'Placas tectónicas', year: '2026', type: 'Art Book', next: 'suenos',
       desc: 'Un terremoto sin testigos. Un reportaje sísmico a través de una ruptura.',
-      media: ['fRn2PG7bZNy3CqhhzalyzJSw4.jpg', 'bBMyRk7JtlzJe86HqoqO8rbABdg.jpg', 'NCfHAbJBDGVTXLieCu6he6O6XI.jpg', 'cS8UE9LMykDvQKPjFxHHLL6saoM.jpg', 'ZrP2NyL6jj0cxxHt1uEcOhUUyM.jpg', 'CS78xz0F9A6vnKhO2GwRIN5bFM.jpg'],
+      media: ['fRn2PG7bZNy3CqhhzalyzJSw4.webp', 'bBMyRk7JtlzJe86HqoqO8rbABdg.webp', 'NCfHAbJBDGVTXLieCu6he6O6XI.webp', 'cS8UE9LMykDvQKPjFxHHLL6saoM.webp', 'ZrP2NyL6jj0cxxHt1uEcOhUUyM.webp', 'CS78xz0F9A6vnKhO2GwRIN5bFM.webp'],
     },
     suenos: {
-      title: 'Sueños', year: '2026', type: 'Conceptual Video', next: 'expo', cover: 'AV06Q3vuu6SoxhggffRKV3gYG4.jpg',
+      title: 'Sueños', year: '2026', type: 'Conceptual Video', next: 'expo', cover: 'AV06Q3vuu6SoxhggffRKV3gYG4.webp',
       desc: 'La noche como escenario íntimo donde el deseo sigue cantando, incluso cuando el cuerpo pide descanso.',
       media: ['AlMRG7hdVX3yPxybW50KsZqYm0.mp4'],
     },
     expo: {
       title: 'Expo ed.03', year: '2025', type: 'Visual Identity', next: 'flores',
       desc: 'Una propuesta de cartel y dirección visual para una exposición inspirada en el espíritu irreverente y experimental del neodadaísmo.',
-      media: ['42gZVYJqGak1mynGQMYDiZpwcM.gif', 'P5JhYwhAeSxuu7orHTFnDJLnhqM.png', 'pIN9d9ds0Aq5lUkoW6ZgxyvgEI.png', 'ajojusUTKEu4eAgsIkzAOZ6w9Ec.jpg', 'qdVafg9Qg9eaLpk9lTi1bo7BlQ.jpg', 'vkfHgWTPsmYitVtputWU52FxkWM.jpg'],
+      media: ['42gZVYJqGak1mynGQMYDiZpwcM.mp4', 'P5JhYwhAeSxuu7orHTFnDJLnhqM.webp', 'pIN9d9ds0Aq5lUkoW6ZgxyvgEI.webp', 'ajojusUTKEu4eAgsIkzAOZ6w9Ec.webp', 'qdVafg9Qg9eaLpk9lTi1bo7BlQ.webp', 'vkfHgWTPsmYitVtputWU52FxkWM.webp'],
     },
     flores: {
       title: 'A cuerpo de flores', year: '2025', type: 'Portrait / Artistic', next: 'pantoneeee',
       desc: 'Una obra de collage digital surrealista y maximalista que fusiona iconografía vintage con moda contemporánea',
-      media: ['g5I8I0kqjJyMqIsVtdS3uPlUFc.png', 'UqsOHCdq9IyHhQkmVgKV7AEk.jpg'],
+      media: ['g5I8I0kqjJyMqIsVtdS3uPlUFc.webp', 'UqsOHCdq9IyHhQkmVgKV7AEk.webp'],
     },
   };
 

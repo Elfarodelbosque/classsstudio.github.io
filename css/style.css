@@ -43,9 +43,10 @@ body {
   line-height: 1.2;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 h1, h2, h3, h4, h5, h6, p, figure { margin: 0; }
+html, body, main, .info-sec, .site-footer { overflow-x: clip; }
 h1, h2, h3, h4, h5, h6 { font-weight: inherit; font-size: inherit; }
 a { color: inherit; text-decoration: none; }
 img, video { display: block; max-width: 100%; }
@@ -75,7 +76,8 @@ button, input, textarea { font: inherit; color: inherit; }
   opacity: 0; will-change: transform;
 }
 .cursor.is-visible { opacity: 1; }
-.cursor-dot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #fff; will-change: transform; }
+/* el punto se dibuja a 72 px y se reduce: al crecer (×7) sigue nítido, no pixelado */
+.cursor-dot { position: absolute; left: 0; top: 0; width: 72px; height: 72px; margin: -36px 0 0 -36px; border-radius: 50%; background: #fff; transform: scale(0.139); }
 .cursor-label {
   position: absolute; left: 0; top: 0; transform: translate(-50%, -50%);
   font: 600 12px/1 var(--font); letter-spacing: .06em; text-transform: uppercase; color: #000;
@@ -128,7 +130,7 @@ a, button, [role="button"] { touch-action: manipulation; }
   .skills-bar--marquee .track, .more-marquee .track { animation: none; }
   .roll > span, .chars > span { transition: none; }
   .projects.js-focus .project .project-media { transform: none; }
-  .project-media img, .work-card .media > img, .work-card .media .thumb { transition: none; }
+  .project-media :is(img, video), .work-card .media > :is(img, video), .work-card .media .thumb { transition: none; }
   .site-header { transition: opacity .3s ease; }
   /* galería: tarjetas quietas en fila, sin 3D ni scroll largo */
   .gallery3d { height: auto; padding: 60px var(--pad) 0; }
@@ -234,9 +236,9 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   transition: opacity .8s var(--ease);
 }
 .project-media { border-radius: var(--radius); overflow: hidden; transform-origin: 100% 50%; transition: transform .9s var(--ease); }
-.project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.project-media :is(img, video) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 @media (hover: hover) and (pointer: fine) {
-  .project:hover .project-media img { transform: scale(1.04); }
+  .project:hover .project-media :is(img, video) { transform: scale(1.04); }
 }
 .project-info { position: relative; }
 /* portada a su proporción real, centrada en su columna */
@@ -258,8 +260,10 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 }
 .project-text { position: absolute; left: 0; bottom: 0; width: 341px; max-width: 100%; }
 /* caja de texto más ancha solo en los proyectos con descripción larga (Sala de Juntas): menos líneas */
-.project--wide-text .project-text { width: 520px; }
-.project--wide-text .project-text .t-p { max-width: none; }
+@media (min-width: 1200px) {
+  .project--wide-text .project-text { width: 520px; }
+  .project--wide-text .project-text .t-p { max-width: none; }
+}
 .project-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
 .project-name { display: none; }
 .project-cat { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--grey-light); }
@@ -300,14 +304,14 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 .skill h3 { font-size: 26px; font-weight: 500; line-height: 30px; letter-spacing: -0.3px; }
 .skill p.t-body { color: var(--grey); max-width: 360px; }
 .skill-img { height: 118px; border-radius: var(--radius); overflow: hidden; clip-path: inset(0 100% 0 0 round var(--radius)); transition: clip-path 420ms var(--ease-out); }
-.skill-img img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 600ms var(--ease-out); }
+.skill-img :is(img, video) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 600ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .skill:hover .skill-img { clip-path: inset(0 0 0 0 round var(--radius)); }
-  .skill:hover .skill-img img { transform: none; }
+  .skill:hover .skill-img :is(img, video) { transform: none; }
 }
 @media (hover: none), (pointer: coarse) {
   .skill-img { clip-path: none; }
-  .skill-img img { transform: none; }
+  .skill-img :is(img, video) { transform: none; }
 }
 
 /* =========================================================
@@ -424,7 +428,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
    las muy verticales se estrechan y se centran en la columna */
 .work-card { display: block; width: min(100%, calc(80vh * var(--ar, 1.25))); margin-inline: auto; }
 .work-card .media { position: relative; aspect-ratio: var(--ar, 1.25); border-radius: var(--radius); overflow: hidden; }
-.work-card .media > img, .work-card .media > video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.work-card .media > :is(img, video), .work-card .media > video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 /* miniatura entera (--tr), centrada; la mitad del alto de la tarjeta y nunca más ancha que el 70 % */
 .work-card .media .thumb {
   position: absolute; left: 50%; top: 50%; height: 50%; max-width: 70%; aspect-ratio: var(--tr, 1.25);
@@ -433,7 +437,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
 }
 .work-card .media .thumb img, .work-card .media .thumb video { width: 100%; height: 100%; object-fit: cover; }
 @media (hover: hover) and (pointer: fine) {
-  .work-card:hover .media > img, .work-card:hover .media > video { transform: scale(1.05); }
+  .work-card:hover .media > :is(img, video), .work-card:hover .media > video { transform: scale(1.05); }
   .work-card:hover .media .thumb { transform: translate(-50%, -50%) scale(1.06); }
 }
 .work-card .cap { display: flex; justify-content: space-between; padding-top: 14px; font-size: 17px; font-weight: 500; --lh: 25.2px; }
@@ -609,7 +613,7 @@ html.is-intro .hero-top, html.is-intro .hero .skills-bar { opacity: 0; }
   .skills-bar--static { grid-template-columns: repeat(2, 1fr); padding: 4px 8px; row-gap: 2px; }
   .skills-bar--static p { white-space: normal; line-height: 18px; }
   .skill-img { clip-path: none; }
-  .skill-img img { transform: none; }
+  .skill-img :is(img, video) { transform: none; }
   .skills-list { margin-top: 32px; }
   .skill { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; min-height: 0; }
   .skill h3 { font-size: 22px; line-height: 26px; }

@@ -90,7 +90,7 @@
     const loop = () => {
       cx += (x - cx) * 0.35; cy += (y - cy) * 0.35; s += (ts - s) * 0.25;
       cursor.style.transform = `translate(${cx}px, ${cy}px)`;
-      dot.style.transform = `scale(${s})`;
+      dot.style.transform = `scale(${s * 10 / 72})`;   // 10 px en reposo; hasta 72 px sin perder nitidez
       if (Math.abs(x - cx) < 0.1 && Math.abs(y - cy) < 0.1 && Math.abs(ts - s) < 0.01) { running = false; return; }
       requestAnimationFrame(loop);
     };

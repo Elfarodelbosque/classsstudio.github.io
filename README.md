@@ -63,4 +63,6 @@ Todas las rutas son relativas, así que funciona tanto en esa dirección como co
 
 ## Peso de la web
 
-Algunos GIF de los proyectos pesan entre 10 y 35 MB (los mismos que usaba Framer). Si algún día quieres que cargue más rápido, convertirlos a vídeo MP4 reduce mucho el peso.
+Los GIF se sirven como vídeo MP4 (`assets/video/<nombre>.mp4`) y las JPG/PNG como WebP (`assets/img/<nombre>.webp`). En `_build/build.js` puedes seguir escribiendo el nombre original del archivo: el generador usa la versión ligera si existe y pesa menos. Si añades una imagen nueva sin su versión ligera, se usa tal cual.
+
+La imagen que se ve al compartir el enlace es `assets/img/og-classs.jpg` (1200×630) y el icono de la pestaña, `favicon-32.png`, `favicon-16.png` y `apple-touch-icon.png`.
